@@ -1,0 +1,2 @@
+# Edge redirect before client bundle (locale default).
+/ /en 307

@@ -41,17 +41,61 @@ If webhook is not configured yet, use **manual rebuild** only; the site still bu
 
 Never commit `.env` or Sanity write tokens (AD-6, FR-65).
 
-## Cloudflare Pages (owner approval required)
+## Cloudflare Pages
 
-Until production is approved (FR-64):
+Repo ships [`wrangler.toml`](../wrangler.toml) (`pages_build_output_dir = out`). Prefer **GitHub Actions → Cloudflare** (same build as local) over building on Cloudflare unless you want a dashboard-only setup.
 
-1. Create a Pages project; connect this repo or upload `out/` from the rebuild artifact.
-2. **Build command:** `npm ci && npm run build`
-3. **Build output directory:** `out`
-4. **Node:** 20
-5. Set Sanity env vars in the Cloudflare dashboard.
+### 1. One-time Cloudflare setup
 
-Custom domain **serendibglobalauto.lk** should match `canonicalBaseUrl` in Sanity **Site settings** (FR-51, FR-53).
+1. [Cloudflare dashboard](https://dash.cloudflare.com) → **Workers & Pages** → note **Account ID**.
+2. **My Profile** → **API Tokens** → **Create token** → template **Edit Cloudflare Workers** (includes Pages deploy), or custom token with **Account → Cloudflare Pages → Edit**.
+3. (Optional) Create an empty Pages project named `sga-headless`, or let the first `wrangler pages deploy` create it.
+
+### 2. GitHub secrets and variables
+
+| Name | Type | Purpose |
+|------|------|---------|
+| `CLOUDFLARE_API_TOKEN` | Secret | Deploy token from step 2 |
+| `CLOUDFLARE_ACCOUNT_ID` | Secret | Account ID |
+| `CLOUDFLARE_PAGES_PROJECT` | Variable (optional) | Defaults to `sga-headless` |
+| `CLOUDFLARE_DEPLOY_ENABLED` | Variable | Set to `true` once secrets are in place (deploy stays off until then) |
+
+Create a GitHub **Environment** named `production` on this repo and add required reviewers if you want approval before each deploy (FR-64).
+
+### 3. What deploys when
+
+[`.github/workflows/rebuild.yml`](../.github/workflows/rebuild.yml):
+
+| Trigger | Build | Deploy |
+|---------|-------|--------|
+| Push to `main` | Yes | Yes → `production` env |
+| `workflow_dispatch` | Yes | Yes if **Deploy to Cloudflare** is checked (default on) |
+| `repository_dispatch` (`sanity-publish`) | Yes | Yes |
+
+CI on PRs ([`ci.yml`](../.github/workflows/ci.yml)) does **not** deploy.
+
+### 4. Custom domain
+
+In Cloudflare Pages → project → **Custom domains** → add **serendibglobalauto.lk** (and `www` if needed). Match **canonicalBaseUrl** in Sanity **Site settings** (FR-51, FR-53).
+
+### 5. Local deploy (optional)
+
+```bash
+export CLOUDFLARE_API_TOKEN=…   # or wrangler login
+export CLOUDFLARE_ACCOUNT_ID=…
+npm run deploy:pages
+```
+
+### Alternative: Cloudflare Git build
+
+If you connect the repo in the Cloudflare UI instead of Actions:
+
+- **Build command:** `npm ci && npm run build`
+- **Build output directory:** `out`
+- **Node:** 20
+- **Environment variables:** `SANITY_PROJECT_ID`, `SANITY_DATASET`
+
+You would then disable the **deploy** job in `rebuild.yml` or uncheck deploy on manual runs to avoid double publishes.
 
 ## After publish checklist
 

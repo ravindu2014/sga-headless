@@ -1,13 +1,20 @@
-# Manual or Sanity-triggered production build (AD-7). Deploy to Cloudflare is separate until owner approves.
+# Build static export and optionally deploy to Cloudflare Pages (AD-7).
 name: Rebuild site
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       reason:
         description: Optional note for the Actions log
         required: false
         type: string
+      deploy:
+        description: Deploy to Cloudflare Pages after a successful build
+        required: false
+        type: boolean
+        default: true
   repository_dispatch:
     types: [sanity-publish]
 
@@ -52,3 +59,38 @@ jobs:
           name: next-static-out
           path: out/
           if-no-files-found: error
+
+  deploy:
+    name: Deploy to Cloudflare Pages
+    needs: build
+    if: >
+      vars.CLOUDFLARE_DEPLOY_ENABLED == 'true' &&
+      always() && needs.build.result == 'success' &&
+      (
+        github.event_name == 'repository_dispatch' ||
+        github.event_name == 'push' ||
+        (github.event_name == 'workflow_dispatch' && inputs.deploy == true)
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: production
+    permissions:
+      contents: read
+      deployments: write
+
+    steps:
+      - name: Download static artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: next-static-out
+          path: out
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: >
+            pages deploy out
+            --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT || 'sga-headless' }}
+            --branch=${{ github.ref_name }}

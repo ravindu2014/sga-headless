@@ -1,0 +1,7 @@
+# Cloudflare Pages — static export from Next.js (`out/`).
+# GitHub Actions: wrangler pages deploy out --project-name=sga-headless
+# Local: npm run deploy:pages (requires wrangler login or CLOUDFLARE_API_TOKEN)
+
+name = "sga-headless"
+compatibility_date = "2024-11-01"
+pages_build_output_dir = "out"
