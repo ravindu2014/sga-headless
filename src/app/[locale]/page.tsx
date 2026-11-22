@@ -5,8 +5,9 @@ import { hasLocale } from "next-intl";
 import { routing, type Locale } from "@/i18n/routing";
 import {
   getContentLayerStatus,
+  getFeaturedVehicles,
+  getHomePage,
   getSiteSettings,
-  getVehicles,
 } from "@/content";
 
 type Props = {
@@ -35,7 +36,8 @@ export default async function HomePage({ params }: Props) {
   const contentLocale = locale as Locale;
 
   await getContentLayerStatus();
-  await getVehicles(contentLocale);
+  await getHomePage(contentLocale);
+  await getFeaturedVehicles(contentLocale);
 
   const t = await getTranslations("home");
 

@@ -1,48 +1,176 @@
 import "server-only";
 
+import { mapSanityImage } from "./images";
 import { resolveLocalizedField } from "./locale";
 import { sanityFetch } from "./sanity-fetch";
-import type { ContentLocale, LocalizedField, LocalizedValue } from "./types";
+import type {
+  ContentLocale,
+  ImageDto,
+  LocalizedField,
+  VehicleAvailability,
+  VehicleDetailDto,
+  VehicleSummaryDto,
+} from "./types";
 
-export type VehicleSummaryDto = {
-  slug: string;
-  title: LocalizedValue<string>;
-  featured: boolean;
-};
-
-type VehicleListItem = {
+type VehicleDocument = {
   slug?: string;
   title?: LocalizedField<string>;
+  make?: string;
+  model?: string;
+  year?: number;
+  mileage?: number;
+  transmission?: string;
+  fuelType?: string;
+  exteriorColour?: string;
+  description?: LocalizedField<string>;
+  features?: LocalizedField<string>;
+  mainImage?: { asset?: { url?: string }; alt?: string };
+  gallery?: { asset?: { url?: string }; alt?: string }[];
+  availability?: VehicleAvailability;
   featured?: boolean;
+  priceLkr?: number;
 };
 
-const VEHICLE_LIST_QUERY = `*[_type == "vehicle" && defined(slug.current)] | order(_updatedAt desc){
+const VEHICLE_CARD_FIELDS = `{
   "slug": slug.current,
   title,
-  featured
+  make,
+  model,
+  year,
+  availability,
+  featured,
+  priceLkr,
+  mainImage {
+    alt,
+    asset->{url}
+  }
 }`;
 
-/** Published vehicle catalogue (empty until epic 2 schemas + content). */
+const VEHICLE_LIST_QUERY = `*[_type == "vehicle" && defined(slug.current)] | order(_updatedAt desc)${VEHICLE_CARD_FIELDS}`;
+
+const VEHICLE_DETAIL_QUERY = `*[_type == "vehicle" && slug.current == $slug][0]{
+  "slug": slug.current,
+  title,
+  make,
+  model,
+  year,
+  mileage,
+  transmission,
+  fuelType,
+  exteriorColour,
+  description,
+  features,
+  availability,
+  featured,
+  priceLkr,
+  mainImage {
+    alt,
+    asset->{url}
+  },
+  gallery[] {
+    alt,
+    asset->{url}
+  }
+}`;
+
+function mapVehicleSummary(
+  row: VehicleDocument,
+  locale: ContentLocale,
+): VehicleSummaryDto | null {
+  if (!row.slug || !row.make || !row.model || row.year == null) {
+    return null;
+  }
+  const title = resolveLocalizedField(row.title, locale);
+  if (!title) {
+    return null;
+  }
+
+  return {
+    slug: row.slug,
+    title,
+    make: row.make,
+    model: row.model,
+    year: row.year,
+    featured: Boolean(row.featured),
+    availability: row.availability ?? "available",
+    ...(row.priceLkr != null ? { priceLkr: row.priceLkr } : {}),
+    ...(mapSanityImage(row.mainImage)
+      ? { mainImage: mapSanityImage(row.mainImage) }
+      : {}),
+  };
+}
+
+function mapVehicleDetail(
+  doc: VehicleDocument,
+  locale: ContentLocale,
+): VehicleDetailDto | null {
+  const summary = mapVehicleSummary(doc, locale);
+  if (!summary) {
+    return null;
+  }
+
+  const gallery: ImageDto[] = [];
+  for (const image of doc.gallery ?? []) {
+    const mapped = mapSanityImage(image);
+    if (mapped) gallery.push(mapped);
+  }
+
+  const description = resolveLocalizedField(doc.description, locale);
+  const features = resolveLocalizedField(doc.features, locale);
+
+  return {
+    ...summary,
+    ...(doc.mileage != null ? { mileage: doc.mileage } : {}),
+    ...(doc.transmission ? { transmission: doc.transmission } : {}),
+    ...(doc.fuelType ? { fuelType: doc.fuelType } : {}),
+    ...(doc.exteriorColour ? { exteriorColour: doc.exteriorColour } : {}),
+    ...(description ? { description } : {}),
+    ...(features ? { features } : {}),
+    gallery,
+  };
+}
+
 export async function getVehicles(
   locale: ContentLocale,
 ): Promise<VehicleSummaryDto[]> {
-  const rows = await sanityFetch<VehicleListItem[] | null>(VEHICLE_LIST_QUERY);
+  const rows = await sanityFetch<VehicleDocument[] | null>(VEHICLE_LIST_QUERY);
   if (!rows?.length) {
     return [];
   }
 
   const vehicles: VehicleSummaryDto[] = [];
-
   for (const row of rows) {
-    if (!row.slug) continue;
-    const title = resolveLocalizedField(row.title, locale);
-    if (!title) continue;
-    vehicles.push({
-      slug: row.slug,
-      title,
-      featured: Boolean(row.featured),
-    });
+    const mapped = mapVehicleSummary(row, locale);
+    if (mapped) vehicles.push(mapped);
   }
-
   return vehicles;
 }
+
+export async function getFeaturedVehicles(
+  locale: ContentLocale,
+): Promise<VehicleSummaryDto[]> {
+  const all = await getVehicles(locale);
+  return all.filter((v) => v.featured);
+}
+
+export async function getVehicleBySlug(
+  locale: ContentLocale,
+  slug: string,
+): Promise<VehicleDetailDto | null> {
+  const doc = await sanityFetch<VehicleDocument | null>(VEHICLE_DETAIL_QUERY, {
+    slug,
+  });
+  if (!doc) {
+    return null;
+  }
+  return mapVehicleDetail(doc, locale);
+}
+
+export async function getVehicleSlugs(): Promise<string[]> {
+  const slugs = await sanityFetch<{ slug: string }[] | null>(
+    `*[_type == "vehicle" && defined(slug.current)]{ "slug": slug.current }`,
+  );
+  return slugs?.map((row) => row.slug).filter(Boolean) ?? [];
+}
+
+export type { VehicleSummaryDto, VehicleDetailDto };

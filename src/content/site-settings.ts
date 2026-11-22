@@ -9,6 +9,7 @@ type SiteSettingsDocument = {
   phone?: string;
   whatsapp?: string;
   email?: string;
+  canonicalBaseUrl?: string;
   defaultSeoTitle?: LocalizedField<string>;
   defaultSeoDescription?: LocalizedField<string>;
 };
@@ -17,6 +18,7 @@ const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0]{
   phone,
   whatsapp,
   email,
+  canonicalBaseUrl,
   defaultSeoTitle,
   defaultSeoDescription
 }`;
@@ -36,6 +38,7 @@ export async function getSiteSettings(
     phone: doc.phone,
     whatsapp: doc.whatsapp,
     email: doc.email,
+    ...(doc.canonicalBaseUrl ? { canonicalBaseUrl: doc.canonicalBaseUrl } : {}),
     ...(seoTitle ? { seoTitle } : {}),
     ...(seoDescription ? { seoDescription } : {}),
   };
