@@ -1,0 +1,41 @@
+# Build order — Serendib Global Auto Stage 1
+# next_id = 6
+
+[[epic]]
+id = 1
+slug = "epic-foundation"
+title = "Platform foundation"
+description = "Next.js static export, CI, locale routing, content layer shell, and Tailwind theme from approved UX."
+covers = ["R8", "R9", "R12"]
+
+[[epic]]
+id = 2
+slug = "epic-sanity-studio"
+title = "Sanity CMS"
+description = "Studio and schemas on project n2zalqm8; localized fields; vehicle and page types."
+covers = ["R6", "R3"]
+after = [{ epic = 1, needs = "repo layout and content module boundary (AD-2)" }]
+
+[[epic]]
+id = 3
+slug = "epic-site-chrome-pages"
+title = "Site chrome and marketing pages"
+description = "Header, footer, language switch, Home, About, Services, FAQ, Contact per UX IA."
+covers = ["R1", "R3", "R4", "R11"]
+after = [{ epic = 2, needs = "page document types and site settings in Sanity" }]
+
+[[epic]]
+id = 4
+slug = "epic-vehicles"
+title = "Vehicle catalogue"
+description = "Catalogue, detail routes, featured strip, filters if scoped, empty states, Price on request."
+covers = ["R2", "R4", "R12"]
+after = [{ epic = 2, needs = "vehicle schema" }, { epic = 3, needs = "shared layout and i18n" }]
+
+[[epic]]
+id = 5
+slug = "epic-enquiry-deploy"
+title = "Enquiry, SEO, and deploy ops"
+description = "WhatsApp enquiry, metadata/sitemap/robots, webhook + manual rebuild docs, Cloudflare wiring when approved."
+covers = ["R5", "R7", "R10"]
+after = [{ epic = 4, needs = "vehicle detail for contextual enquiry" }]

@@ -1,0 +1,86 @@
+# Stories — epic-sanity-studio (build order)
+# next_id = 9
+
+[[entry]]
+id = 1
+type = "story"
+title = "Scaffold Sanity Studio in repo"
+description = "Add studio/ via clean template wired to project n2zalqm8 dataset production; npm scripts to dev/build studio; env example without secrets."
+verify = "npm run dev (or studio:dev) opens Studio against production dataset; project id matches stage-1-input."
+covers = ["R6"]
+hitl = false
+risk = "medium"
+
+[[entry]]
+id = 2
+type = "story"
+title = "Reusable localized field types"
+description = "Define localeString / localeText / localeBlock helpers per AD-4 for en+si with optional si."
+verify = "Schema types compile; Studio shows EN/SI inputs on a test type."
+covers = ["R6", "R3"]
+after = [1]
+
+[[entry]]
+id = 3
+type = "story"
+title = "Site settings schema"
+description = "Singleton siteSettings: contact phone, WhatsApp, email, default SEO, canonical base URL; no street address field."
+verify = "Owner can save siteSettings with +94719186125 and serendibglobalauto@gmail.com."
+covers = ["R6"]
+after = [2]
+
+[[entry]]
+id = 4
+type = "story"
+title = "Marketing page document types"
+description = "homePage, aboutPage, contactPage singletons with localized hero/body blocks."
+verify = "Each singleton creatable in Studio with en required, si optional."
+covers = ["R6", "R3"]
+after = [2]
+
+[[entry]]
+id = 5
+type = "story"
+title = "Services page schema"
+description = "servicesPage with ordered array of exactly five service items (title+body localized) matching D-1 order."
+verify = "Studio enforces or documents five slots; reorderable list."
+covers = ["R3"]
+after = [2]
+
+[[entry]]
+id = 6
+type = "story"
+title = "FAQ schema"
+description = "faqPage or faqItem list with localized question/answer pairs for accordion UI."
+verify = "FAQ entries support en/si; publish workflow works."
+covers = ["R3"]
+after = [2]
+
+[[entry]]
+id = 7
+type = "story"
+title = "Vehicle listing schema"
+description = "vehicle type with FR-16 fields, slug, availability, featured, optional LKR price, images, localized description/features."
+verify = "Sample vehicle publishes; slug unique; price optional."
+covers = ["R6"]
+after = [2]
+
+[[entry]]
+id = 8
+type = "story"
+title = "Studio desk structure and previews"
+description = "Group Vehicles, Pages, Settings in desk; sensible preview for vehicle main image; publish/draft visible."
+verify = "Desk matches owner mental model; vehicle and home appear in navigation."
+covers = ["R6"]
+after = [3, 4, 5, 6, 7]
+
+[[entry]]
+id = 9
+type = "story"
+title = "Wire content layer queries to schemas"
+description = "Extend src/content/ GROQ for siteSettings, pages, vehicles, faq; map to DTOs consumed by epic 3–4."
+verify = "Build-time fetch returns published sample vehicle and home without GROQ in pages."
+covers = ["R6"]
+after = [8]
+hitl = false
+risk = "medium"

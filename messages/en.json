@@ -1,0 +1,10 @@
+{
+  "metadata": {
+    "title": "Serendib Global Auto",
+    "description": "Vehicle imports from auction to your door."
+  },
+  "home": {
+    "title": "Serendib Global Auto",
+    "scaffoldNote": "Stage 1 scaffold — static export, TypeScript, Tailwind."
+  }
+}

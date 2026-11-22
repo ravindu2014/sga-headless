@@ -1,0 +1,47 @@
+# Stories — epic-foundation (build order)
+
+[[entry]]
+id = 1
+type = "story"
+title = "Scaffold Next.js static export and Tailwind"
+description = "Create app with TypeScript, output export, ESLint, place brand logo in public/brand."
+verify = "npm run build succeeds; out/ contains static assets."
+covers = ["R8"]
+hitl = false
+risk = "low"
+
+[[entry]]
+id = 2
+type = "story"
+title = "Locale routing and message files"
+description = "Add [locale] segment, en/si message JSON, redirect / to default locale per AD-3."
+verify = "/en and /si render placeholder home; html lang attribute set."
+covers = ["R8", "R12"]
+after = [1]
+
+[[entry]]
+id = 3
+type = "story"
+title = "Content layer module"
+description = "Sanity client + typed fetch helpers in src/content/ only; env for project id/dataset."
+verify = "Build calls content module without importing GROQ in a page component."
+covers = ["R8"]
+after = [1]
+
+[[entry]]
+id = 4
+type = "story"
+title = "GitHub Actions CI"
+description = "Workflow on push/PR: install, lint, typecheck, build."
+verify = "CI workflow file present; build step matches local npm run build."
+covers = ["R9"]
+after = [1]
+
+[[entry]]
+id = 5
+type = "story"
+title = "Tailwind theme from DESIGN tokens"
+description = "Map primary, accent, container radius 3px, catalogue gap, typography stack."
+verify = "Sample page uses token classes matching DESIGN.md colors."
+covers = ["R12"]
+after = [1, 2]

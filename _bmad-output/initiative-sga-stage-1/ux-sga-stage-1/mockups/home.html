@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SGA Home — flat layout reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+Sinhala:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff; --surface: #ffffff; --primary: #0F3D7A; --accent: #C41E3A;
+      --text: #1E293B; --muted: #64748B; --border: #D8DEE8;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: Inter, "Noto Sans Sinhala", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .logo { height: 40px; width: auto; display: block; }
+    nav { display: none; gap: 1.25rem; font-size: 0.9rem; font-weight: 500; }
+    nav a { color: var(--text); text-decoration: none; }
+    nav a:hover { color: var(--primary); }
+    .lang { background: #EEF1F6; border-radius: 999px; padding: 0.25rem; font-size: 0.8rem; display: inline-flex; }
+    .lang span { padding: 0.35rem 0.75rem; border-radius: 999px; cursor: default; background: transparent; color: var(--text); }
+    .lang .active { background: var(--surface); color: var(--primary); font-weight: 600; }
+    .hero { max-width: 72rem; margin: 0 auto; padding: 3rem 1rem; display: grid; gap: 2rem; }
+    @media (min-width: 768px) { nav { display: flex; } .hero { grid-template-columns: 1.1fr 0.9fr; align-items: center; } }
+    h1 { font-size: clamp(1.75rem, 4vw, 2.25rem); line-height: 1.2; color: var(--primary); font-weight: 700; }
+    .sub { color: var(--muted); margin-top: 0.75rem; max-width: 36ch; }
+    .ctas { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .btn-p { background: var(--accent); color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 2px; font-weight: 600; cursor: pointer; min-height: 44px; }
+    .btn-s { background: var(--surface); color: var(--primary); border: 1px solid var(--border); padding: 0.75rem 1.5rem; border-radius: 2px; font-weight: 600; min-height: 44px; }
+    .hero-img { background: var(--surface); border: 1px solid var(--border); border-radius: 3px; aspect-ratio: 4/3; display: grid; place-items: center; color: var(--muted); font-size: 0.9rem; }
+    section { max-width: 72rem; margin: 0 auto; padding: 2rem 1rem 3rem; border-top: 1px solid var(--border); }
+    h2 { font-size: 1.5rem; color: var(--primary); margin-bottom: 1rem; font-weight: 600; }
+  .cards {
+      display: grid;
+      gap: 1.5rem;
+      background: var(--bg);
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      align-content: start;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .card:hover { border-color: #B8C2D0; }
+    .card .ph { aspect-ratio: 4/3; background: #ffffff; border-bottom: 1px solid var(--border); border-radius: 3px 3px 0 0; }
+    .card .body { padding: 1rem; }
+    .badge { font-size: 0.7rem; background: var(--primary); color: #fff; padding: 0.15rem 0.5rem; border-radius: 999px; display: inline-block; margin-bottom: 0.5rem; }
+    .note { font-size: 0.75rem; color: var(--muted); text-align: center; margin: 2rem 1rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <img class="logo" src="../imports/sga_small_logo.jpg" alt="Serendib Global Auto" />
+    <nav aria-label="Primary">
+      <a href="#">Home</a>
+      <a href="#">Vehicles</a>
+      <a href="#">Services</a>
+      <a href="#">About</a>
+      <a href="#">FAQ</a>
+      <a href="#">Contact</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <span class="active">EN</span>
+      <span>සිං</span>
+    </div>
+  </header>
+  <main>
+    <div class="hero">
+      <div>
+        <h1>Trusted vehicle imports,<br />from auction to your door</h1>
+        <p class="sub">Browse available stock, understand our import process, and enquire on WhatsApp.</p>
+        <div class="ctas">
+          <button type="button" class="btn-p">Browse vehicles</button>
+          <button type="button" class="btn-s">Contact us</button>
+        </div>
+      </div>
+      <div class="hero-img">Hero image or featured vehicle — CMS</div>
+    </div>
+    <section>
+      <h2>Featured vehicles</h2>
+      <div class="cards">
+        <article class="card">
+          <div class="ph"></div>
+          <div class="body">
+            <span class="badge">Featured</span>
+            <strong>2020 Toyota Axio</strong>
+            <p style="font-size:0.875rem;color:var(--muted);margin-top:0.25rem;">Petrol · Automatic</p>
+            <p style="margin-top:0.5rem;font-weight:700;">Price on request</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="ph"></div>
+          <div class="body">
+            <strong>2018 Honda Vezel</strong>
+            <p style="font-size:0.875rem;color:var(--muted);margin-top:0.25rem;">Hybrid · Automatic</p>
+            <p style="margin-top:0.5rem;font-weight:700;">LKR 8,200,000</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+  <p class="note">Flat reference mock — 3px micro-radius on cards/media, white field, no shadows. See DESIGN.md.</p>
+</body>
+</html>

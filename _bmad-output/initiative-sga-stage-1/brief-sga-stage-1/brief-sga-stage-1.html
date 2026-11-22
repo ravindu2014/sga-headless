@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-field="title">Serendib Global Auto — Stage 1 Website</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #ecefec; --paper: #ffffff; --ink: #1c2321; --muted: #5f6b67; --rule: #d8dfdc;
+  --accent: #2c6e5a; --lead: #f3f7f5; --ask: #fff6e0; --ask-rule: #d9a521;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+}
+* { box-sizing: border-box; }
+html { background: var(--page); }
+body { margin: 0; padding: 2rem 1rem 3rem; font: 16px/1.6 var(--sans); color: var(--ink); }
+main { max-width: 52rem; margin: 0 auto; background: var(--paper); border: 1px solid var(--rule); box-shadow: 0 0.25rem 1.5rem rgb(0 0 0 / 6%); padding: 2.25rem 2.5rem 2.5rem; }
+header { padding-bottom: 1rem; border-bottom: 2px solid var(--ink); }
+.kicker { margin: 0 0 0.3rem; font: 700 0.72rem/1.2 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+h1 { margin: 0; font: 700 2.1rem/1.15 var(--serif); letter-spacing: -0.01em; }
+.meta { margin: 0.4rem 0 0; font-size: 0.85rem; color: var(--muted); }
+.meta span + span::before { content: " · "; }
+.lead { margin-top: 1.5rem; padding: 1.25rem 1.5rem; background: var(--lead); border-left: 4px solid var(--accent); font: 1.08rem/1.6 var(--serif); }
+.lead p { margin: 0 0 0.85rem; }
+.lead > div > :last-child > :last-child { margin-bottom: 0; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem 1.75rem; margin-top: 1.75rem; }
+.grid section { min-width: 0; }
+.grid .wide { grid-column: 1 / -1; }
+section > h2 { margin: 0 0 0.5rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--rule); font: 700 0.78rem/1.2 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+section p, section ul, section ol { margin: 0 0 0.75rem; }
+section ul, section ol { padding-left: 1.2rem; }
+section h3 { margin: 0.9rem 0 0.3rem; font-size: 0.95rem; }
+.ask { margin-top: 1.75rem; padding: 1.1rem 1.4rem; background: var(--ask); border: 1px solid var(--ask-rule); border-radius: 0.35rem; }
+.ask > h2 { border: 0; padding: 0; color: #86630c; }
+.vision { margin-top: 1.75rem; font: italic 1.02rem/1.6 var(--serif); color: var(--muted); }
+.vision > h2 { font-style: normal; }
+.rest { margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-size: 0.95rem; }
+.rest h2 { margin: 0 0 0.5rem; font: 700 0.78rem/1.2 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; font-size: 0.88rem; }
+th, td { padding: 0.35rem 0.5rem; border: 1px solid var(--rule); text-align: left; vertical-align: top; }
+pre { white-space: pre-wrap; font: 0.9rem/1.5 var(--sans); margin: 0; }
+a { color: var(--accent); }
+@media (max-width: 40rem) {
+  body { padding: 1rem 0.75rem 2rem; }
+  main { padding: 1.5rem 1.25rem; }
+  h1 { font-size: 1.65rem; }
+  .grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media print {
+  html { background: none; }
+  body { padding: 0; }
+  main { border: 0; box-shadow: none; padding: 0; max-width: none; }
+  .grid section { break-inside: avoid; }
+}
+</style>
+<style>
+pre.fallback { white-space: pre-wrap; word-wrap: break-word; }
+
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="kicker">Product brief</p>
+    <h1 data-field="title">Serendib Global Auto — Stage 1 Website</h1>
+    <p class="meta"><span data-field="updated">2026-11-22</span><span data-field="status">final</span></p>
+  </header>
+  <section class="lead" data-section="Executive summary"><div data-body><div data-md="0"><pre class="fallback">Serendib Global Auto needs a professional public website that builds trust, showcases vehicles available for import and sale, and makes it easy for interested buyers to enquire—without committing to a costly inventory system in the first year.
+
+Stage 1 is a responsive, production-ready marketing site at **https://serendibglobalauto.lk**, backed by **Sanity CMS** so the business owner can add and update vehicles, prices, and page content without developer help. The site will be built as a **static Next.js export**, deployed on **Cloudflare Pages** with **GitHub Actions** CI, targeting **$0 recurring** infrastructure on free tiers.
+
+Enquiries will use validated forms that open **WhatsApp** with a pre-filled message, plus visible **email and phone** fallbacks. The site will support **English and Sinhala** in Stage 1. We will not claim to store enquiries in a database or invent company achievements the business has not provided.</pre></div></div></section>
+  <div class="grid">
+    <section class="wide" data-section="Problem"><h2>Problem</h2><div data-body><div data-md="1"><pre class="fallback">**Potential vehicle buyers** in Sri Lanka (and overseas Sri Lankan buyers) researching imports need to judge whether Serendib Global Auto is legitimate, see what is actually available, and start a conversation quickly. Without a focused website they rely on scattered social posts, word of mouth, or generic directories—slow, hard to compare stock, and weak on trust signals.
+
+**The business owner** needs to present a consistent brand and update listings without paying for custom admin software or expensive hosting. Manually sending photos and specs on WhatsApp for every lead does not scale and makes the operation look informal compared to established dealers.
+
+**Cost of the status quo:** missed enquiries when stock is invisible online, time lost repeating the same answers, and weaker credibility versus competitors who already publish inventory on the web.
+
+*[ASSUMPTION: the owner has observed lost or delayed leads due to lack of a central catalogue; evidence would be enquiry logs or stated lead volume after launch.]*</pre></div></div></section>
+    <section data-section="Solution"><h2>Solution</h2><div data-body><div data-md="2"><pre class="fallback">A **company website** that:
+
+1. **Establishes trust** — professional home page, about and services content, real contact details, brand-aligned design using the supplied logo.
+2. **Publishes a vehicle catalogue** — listing cards and detail pages driven by published Sanity content (make, model, year, specs, images, price or **price on request** when unset, availability, featured flag).
+3. **Explains the import journey** — Services covering auction bidding, export handling, import to Sri Lanka, customs clearance, and delivery (owner-editable in CMS).
+4. **Converts interest to contact** — prominent browse and contact CTAs; vehicle detail pages with enquiry actions; WhatsApp deep link to **+94719186125**, email **serendibglobalauto@gmail.com**, phone **+94719186125** (digital contact only—no street address on site for now).
+5. **Stays maintainable** — content and vehicles edited in **Sanity hosted Studio** (project `n2zalqm8`, dataset `production`); site rebuilds from Git when content or code changes.
+
+The experience is intentionally **static-first**: fast pages, inexpensive hosting, honest enquiry flow (no false “message sent to our CRM” messaging).</pre></div></div></section>
+    <section data-section="What makes it different"><h2>What makes it different</h2><div data-body><div data-md="3"><pre class="fallback">| Alternative | Limitation for Stage 1 | Stage 1 choice |
+|-------------|------------------------|----------------|
+| Social media only | No structured catalogue, weak SEO, fragmented stock | Dedicated catalogue + SEO pages |
+| Custom inventory / ERP now | Cost and complexity beyond year 1–2 needs | CMS-managed listings only |
+| WordPress + plugins | Hosting, security, plugin sprawl | Static Next.js + Sanity |
+| Form backend (paid SaaS) | Recurring cost, privacy scope | WhatsApp + public contact details |
+| Competing dealer sites | Not owned brand story | Owner-controlled Sanity content |
+
+The honest differentiator is not a proprietary algorithm—it is **credible presentation plus owner-controlled updates at near-zero run cost**, with a clear path to a richer platform later without throwing away the site.</pre></div></div></section>
+    <section data-section="Who it serves"><h2>Who it serves</h2><div data-body><div data-md="4"><pre class="fallback">**Primary — prospective buyers**  
+Individuals (and businesses) shopping for imported or available vehicles. They need to scan stock, read specifications, see photos, understand services, and contact the business on their preferred channel (especially WhatsApp in Sri Lanka).
+
+**Primary — business owner / content manager**  
+Updates vehicles, images, prices, availability, featured listings, and core page copy in Sanity without code changes for routine work.
+
+**Secondary — staff assisting sales**  
+Can share canonical vehicle URLs from the site instead of re-sending media bundles.
+
+**Out of scope personas for Stage 1** — finance underwriters, customs agents, or internal warehouse staff; the site does not run their workflows yet.</pre></div></div></section>
+    <section data-section="Success criteria"><h2>Success criteria</h2><div data-body><div data-md="5"><pre class="fallback">Criteria are checkable after launch (within ~90 days of go-live unless noted).
+
+| ID | Criterion |
+|----|-----------|
+| SC-1 | Public site serves **Home, Vehicles, Vehicle detail, About, Services, Contact** on desktop and mobile without layout breakage. |
+| SC-2 | Owner can **create, edit, unpublish** a vehicle in Sanity and see the change reflected on the site after the agreed build/deploy process. |
+| SC-3 | Each published vehicle has a **stable URL** (slug-based) suitable for sharing on WhatsApp. |
+| SC-4 | Vehicle enquiry flow **validates input** and opens WhatsApp with a **pre-filled message** including vehicle context when enquiring from a detail page. |
+| SC-5 | **Contact details** on site match configured values: WhatsApp/phone **+94719186125**, email **serendibglobalauto@gmail.com**. |
+| SC-6 | **Recurring infrastructure cost** for agreed stack remains **$0** on free tiers (GitHub public, Cloudflare Pages, Sanity Free) absent explicit approval of paid services. |
+| SC-7 | CI on the main branch runs **install, lint, typecheck, production build** successfully. |
+| SC-8 | Basic SEO artefacts present: page titles/descriptions, Open Graph, sitemap, robots.txt, canonical base **serendibglobalauto.lk**. |
+| SC-9 | Visitor can switch **English ↔ Sinhala** for core marketing and vehicle content; untranslated CMS fields fall back gracefully (exact pattern in PRD/architecture). |
+| SC-10 | Vehicles and catalogue UI show **Price on request** when no numeric price is set in CMS. |
+
+**Stop / revisit signals:** If free-tier limits block builds or CMS usage, or enquiry volume justifies stored leads, revisit architecture in a **Stage 2** decision—not by silent scope creep in Stage 1.</pre></div></div></section>
+    <section class="wide" data-section="Scope"><h2>Scope</h2><div data-body><div data-md="6"><pre class="fallback">### In scope (Stage 1)
+
+- Pages: **Home, Vehicles (catalogue), Vehicle detail, About, Services, Contact**; FAQ only if UX/PRD shows clear value.
+- Sanity schemas for **site settings, home, about, services, vehicles, contact/navigation** as needed for owner self-service.
+- Static generation of vehicle routes from **published** Sanity content.
+- Simple catalogue **filter/sort** only where reliable on static data (no over-engineering).
+- **WhatsApp-first enquiry** with email/phone fallbacks; contact values configurable via CMS and/or env.
+- Brand use of **`assets/brand/SGA_Full_logo.jpg`**; UX to define flat UI palette derived from navy/crimson logo colours.
+- **GitHub Actions** validation; **Cloudflare Pages** deployment approach documented and wired when owner approves production deploy.
+- Accessibility and performance baseline: semantic HTML, keyboard-friendly nav, image alt text, responsive layout.
+- **No invented** testimonials, certifications, awards, or structured data the business has not supplied.
+- **Bilingual UI: English + Sinhala** (language switcher; localized CMS fields or equivalent—defined in architecture).
+- **Services** content for: vehicle bidding on auction; exporting process handling; importing to Sri Lanka; custom clearance; delivery.
+
+### Explicitly out of scope (Stage 1)
+
+- Database-backed inventory, enquiry CRM, user accounts, payments.
+- Custom admin dashboard (Sanity Studio is the admin).
+- Server-side form submission, API routes, SSR, Server Actions, paid Workers (unless explicitly approved).
+- Cloudflare D1/R2/Workers inventory features.
+- **Tamil** (and languages beyond English + Sinhala) unless later approved.
+- **Physical street address** on the public site (digital contact only for now).
+- **Legal entity / registration footer line** until owner provides exact text.
+
+### Stage 2+ parking lot (inform vision, not committed)
+
+Dynamic inventory, enquiry management, image/document storage on R2, D1, Workers APIs—only after Stage 1 proves the content model and traffic patterns.</pre></div></div></section>
+  </div>
+  
+  <section class="vision" data-section="Vision"><h2>Vision</h2><div data-body><div data-md="7"><pre class="fallback">If Stage 1 succeeds, Serendib Global Auto has a trusted digital storefront and a **content model** that can grow into a true inventory platform: live stock status, enquiry pipeline, document storage for import paperwork, and staff workflows—likely on Cloudflare data services—without replacing the public site wholesale.
+
+That progression is **conditional** on business volume and budget; Stage 1 deliberately avoids building it prematurely.</pre></div></div></section>
+  <section class="rest" data-rest><div data-md="8"><pre class="fallback">## Decisions
+
+Product owner answers recorded **2026-11-22** (supersedes prior assumptions where noted).
+
+| ID | Decision |
+|----|----------|
+| D-1 | **Services** (in order): (1) Vehicle bidding on auction, (2) Exporting process handling, (3) Importing to Sri Lanka, (4) Custom clearance, (5) Delivery. |
+| D-2 | When vehicle price is not set in CMS, display **Price on request** (listed LKR price still allowed when provided). |
+| D-3 | **Contact: digital only** — no physical address on site for now. |
+| D-4 | **Languages in Stage 1: English + Sinhala** (not Tamil in Stage 1). |
+| D-5 | **Legal footer line:** not required yet; omit until owner supplies exact text. |
+
+## Assumptions
+
+| ID | Assumption | Affects |
+|----|------------|---------|
+| A-3 | Detailed service descriptions are owner/CMS content; agents supply structure and placeholders only | Services page |
+| A-5 | Launch may start with zero or few vehicles; empty states must still look professional | Catalogue UX |
+| A-6 | Same number used for WhatsApp and voice is intentional | Contact, enquiry copy |
+| A-7 | Owner will provide or approve Sinhala translations for CMS-managed copy (or accept launch with partial Sinhala until filled) | i18n, content workflow |
+
+## Open questions
+
+| ID | Question | Owner action |
+|----|----------|--------------|
+| OQ-5 | Legal entity name or registration line in footer | Provide exact text when ready (deferred) |</pre></div></section>
+</main>
+<script type="application/json" id="view-data">{"layout": "view", "slots": ["Serendib Global Auto needs a professional public website that builds trust, showcases vehicles available for import and sale, and makes it easy for interested buyers to enquire—without committing to a costly inventory system in the first year.\n\nStage 1 is a responsive, production-ready marketing site at **https://serendibglobalauto.lk**, backed by **Sanity CMS** so the business owner can add and update vehicles, prices, and page content without developer help. The site will be built as a **static Next.js export**, deployed on **Cloudflare Pages** with **GitHub Actions** CI, targeting **$0 recurring** infrastructure on free tiers.\n\nEnquiries will use validated forms that open **WhatsApp** with a pre-filled message, plus visible **email and phone** fallbacks. The site will support **English and Sinhala** in Stage 1. We will not claim to store enquiries in a database or invent company achievements the business has not provided.", "**Potential vehicle buyers** in Sri Lanka (and overseas Sri Lankan buyers) researching imports need to judge whether Serendib Global Auto is legitimate, see what is actually available, and start a conversation quickly. Without a focused website they rely on scattered social posts, word of mouth, or generic directories—slow, hard to compare stock, and weak on trust signals.\n\n**The business owner** needs to present a consistent brand and update listings without paying for custom admin software or expensive hosting. Manually sending photos and specs on WhatsApp for every lead does not scale and makes the operation look informal compared to established dealers.\n\n**Cost of the status quo:** missed enquiries when stock is invisible online, time lost repeating the same answers, and weaker credibility versus competitors who already publish inventory on the web.\n\n*[ASSUMPTION: the owner has observed lost or delayed leads due to lack of a central catalogue; evidence would be enquiry logs or stated lead volume after launch.]*", "A **company website** that:\n\n1. **Establishes trust** — professional home page, about and services content, real contact details, brand-aligned design using the supplied logo.\n2. **Publishes a vehicle catalogue** — listing cards and detail pages driven by published Sanity content (make, model, year, specs, images, price or **price on request** when unset, availability, featured flag).\n3. **Explains the import journey** — Services covering auction bidding, export handling, import to Sri Lanka, customs clearance, and delivery (owner-editable in CMS).\n4. **Converts interest to contact** — prominent browse and contact CTAs; vehicle detail pages with enquiry actions; WhatsApp deep link to **+94719186125**, email **serendibglobalauto@gmail.com**, phone **+94719186125** (digital contact only—no street address on site for now).\n5. **Stays maintainable** — content and vehicles edited in **Sanity hosted Studio** (project `n2zalqm8`, dataset `production`); site rebuilds from Git when content or code changes.\n\nThe experience is intentionally **static-first**: fast pages, inexpensive hosting, honest enquiry flow (no false “message sent to our CRM” messaging).", "| Alternative | Limitation for Stage 1 | Stage 1 choice |\n|-------------|------------------------|----------------|\n| Social media only | No structured catalogue, weak SEO, fragmented stock | Dedicated catalogue + SEO pages |\n| Custom inventory / ERP now | Cost and complexity beyond year 1–2 needs | CMS-managed listings only |\n| WordPress + plugins | Hosting, security, plugin sprawl | Static Next.js + Sanity |\n| Form backend (paid SaaS) | Recurring cost, privacy scope | WhatsApp + public contact details |\n| Competing dealer sites | Not owned brand story | Owner-controlled Sanity content |\n\nThe honest differentiator is not a proprietary algorithm—it is **credible presentation plus owner-controlled updates at near-zero run cost**, with a clear path to a richer platform later without throwing away the site.", "**Primary — prospective buyers**  \nIndividuals (and businesses) shopping for imported or available vehicles. They need to scan stock, read specifications, see photos, understand services, and contact the business on their preferred channel (especially WhatsApp in Sri Lanka).\n\n**Primary — business owner / content manager**  \nUpdates vehicles, images, prices, availability, featured listings, and core page copy in Sanity without code changes for routine work.\n\n**Secondary — staff assisting sales**  \nCan share canonical vehicle URLs from the site instead of re-sending media bundles.\n\n**Out of scope personas for Stage 1** — finance underwriters, customs agents, or internal warehouse staff; the site does not run their workflows yet.", "Criteria are checkable after launch (within ~90 days of go-live unless noted).\n\n| ID | Criterion |\n|----|-----------|\n| SC-1 | Public site serves **Home, Vehicles, Vehicle detail, About, Services, Contact** on desktop and mobile without layout breakage. |\n| SC-2 | Owner can **create, edit, unpublish** a vehicle in Sanity and see the change reflected on the site after the agreed build/deploy process. |\n| SC-3 | Each published vehicle has a **stable URL** (slug-based) suitable for sharing on WhatsApp. |\n| SC-4 | Vehicle enquiry flow **validates input** and opens WhatsApp with a **pre-filled message** including vehicle context when enquiring from a detail page. |\n| SC-5 | **Contact details** on site match configured values: WhatsApp/phone **+94719186125**, email **serendibglobalauto@gmail.com**. |\n| SC-6 | **Recurring infrastructure cost** for agreed stack remains **$0** on free tiers (GitHub public, Cloudflare Pages, Sanity Free) absent explicit approval of paid services. |\n| SC-7 | CI on the main branch runs **install, lint, typecheck, production build** successfully. |\n| SC-8 | Basic SEO artefacts present: page titles/descriptions, Open Graph, sitemap, robots.txt, canonical base **serendibglobalauto.lk**. |\n| SC-9 | Visitor can switch **English ↔ Sinhala** for core marketing and vehicle content; untranslated CMS fields fall back gracefully (exact pattern in PRD/architecture). |\n| SC-10 | Vehicles and catalogue UI show **Price on request** when no numeric price is set in CMS. |\n\n**Stop / revisit signals:** If free-tier limits block builds or CMS usage, or enquiry volume justifies stored leads, revisit architecture in a **Stage 2** decision—not by silent scope creep in Stage 1.", "### In scope (Stage 1)\n\n- Pages: **Home, Vehicles (catalogue), Vehicle detail, About, Services, Contact**; FAQ only if UX/PRD shows clear value.\n- Sanity schemas for **site settings, home, about, services, vehicles, contact/navigation** as needed for owner self-service.\n- Static generation of vehicle routes from **published** Sanity content.\n- Simple catalogue **filter/sort** only where reliable on static data (no over-engineering).\n- **WhatsApp-first enquiry** with email/phone fallbacks; contact values configurable via CMS and/or env.\n- Brand use of **`assets/brand/SGA_Full_logo.jpg`**; UX to define flat UI palette derived from navy/crimson logo colours.\n- **GitHub Actions** validation; **Cloudflare Pages** deployment approach documented and wired when owner approves production deploy.\n- Accessibility and performance baseline: semantic HTML, keyboard-friendly nav, image alt text, responsive layout.\n- **No invented** testimonials, certifications, awards, or structured data the business has not supplied.\n- **Bilingual UI: English + Sinhala** (language switcher; localized CMS fields or equivalent—defined in architecture).\n- **Services** content for: vehicle bidding on auction; exporting process handling; importing to Sri Lanka; custom clearance; delivery.\n\n### Explicitly out of scope (Stage 1)\n\n- Database-backed inventory, enquiry CRM, user accounts, payments.\n- Custom admin dashboard (Sanity Studio is the admin).\n- Server-side form submission, API routes, SSR, Server Actions, paid Workers (unless explicitly approved).\n- Cloudflare D1/R2/Workers inventory features.\n- **Tamil** (and languages beyond English + Sinhala) unless later approved.\n- **Physical street address** on the public site (digital contact only for now).\n- **Legal entity / registration footer line** until owner provides exact text.\n\n### Stage 2+ parking lot (inform vision, not committed)\n\nDynamic inventory, enquiry management, image/document storage on R2, D1, Workers APIs—only after Stage 1 proves the content model and traffic patterns.", "If Stage 1 succeeds, Serendib Global Auto has a trusted digital storefront and a **content model** that can grow into a true inventory platform: live stock status, enquiry pipeline, document storage for import paperwork, and staff workflows—likely on Cloudflare data services—without replacing the public site wholesale.\n\nThat progression is **conditional** on business volume and budget; Stage 1 deliberately avoids building it prematurely.", "## Decisions\n\nProduct owner answers recorded **2026-11-22** (supersedes prior assumptions where noted).\n\n| ID | Decision |\n|----|----------|\n| D-1 | **Services** (in order): (1) Vehicle bidding on auction, (2) Exporting process handling, (3) Importing to Sri Lanka, (4) Custom clearance, (5) Delivery. |\n| D-2 | When vehicle price is not set in CMS, display **Price on request** (listed LKR price still allowed when provided). |\n| D-3 | **Contact: digital only** — no physical address on site for now. |\n| D-4 | **Languages in Stage 1: English + Sinhala** (not Tamil in Stage 1). |\n| D-5 | **Legal footer line:** not required yet; omit until owner supplies exact text. |\n\n## Assumptions\n\n| ID | Assumption | Affects |\n|----|------------|---------|\n| A-3 | Detailed service descriptions are owner/CMS content; agents supply structure and placeholders only | Services page |\n| A-5 | Launch may start with zero or few vehicles; empty states must still look professional | Catalogue UX |\n| A-6 | Same number used for WhatsApp and voice is intentional | Contact, enquiry copy |\n| A-7 | Owner will provide or approve Sinhala translations for CMS-managed copy (or accept launch with partial Sinhala until filled) | i18n, content workflow |\n\n## Open questions\n\n| ID | Question | Owner action |\n|----|----------|--------------|\n| OQ-5 | Legal entity name or registration line in footer | Provide exact text when ready (deferred) |"]}</script>
+<script>
+var MARKED_SRC = "https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js";
+var MERMAID_SRC = "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js";
+var PRESENTER_HTML = "\u003c!doctype html\u003e\u003chtml\u003e\u003chead\u003e\u003cmeta charset=\"utf-8\"\u003e\u003ctitle\u003eSpeaker notes\u003c/title\u003e\u003cstyle\u003e\n:root { color-scheme: light dark; --bg: #ffffff; --fg: #1f2328; --muted: #59636e; }\n@media (prefers-color-scheme: dark) { :root { --bg: #15181d; --fg: #e3e6ea; --muted: #9aa3ad; } }\nbody { margin: 0; padding: 1.2em 1.6em; background: var(--bg); color: var(--fg);\n  font: 20px/1.55 -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Arial, sans-serif; }\nheader { display: flex; justify-content: space-between; color: var(--muted); font-size: 15px; }\nh1 { font-size: 1.3em; margin: 0.4em 0 0.8em; }\n#next { color: var(--muted); font-size: 15px; border-top: 1px solid var(--muted); padding-top: 0.6em; margin-top: 1.5em; }\n.empty { color: var(--muted); }\npre { white-space: pre-wrap; font: inherit; }\n\u003c/style\u003e\u003c/head\u003e\u003cbody\u003e\u003cheader\u003e\u003cspan id=\"section\"\u003e\u003c/span\u003e\u003cspan id=\"pos\"\u003e\u003c/span\u003e\u003c/header\u003e\n\u003ch1 id=\"title\"\u003e\u003c/h1\u003e\u003cdiv id=\"notes\"\u003e\u003c/div\u003e\u003cdiv id=\"next\"\u003e\u003c/div\u003e\u003c/body\u003e\u003c/html\u003e";
+
+(function () {
+  var data = JSON.parse(document.getElementById('view-data').textContent);
+  var hasMarked = false;
+
+  function md(text) { return hasMarked ? window.marked.parse(text) : null; }
+  function inline(text) { return hasMarked ? window.marked.parseInline(text) : null; }
+
+  function load(src) {
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = src; s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  function drawDiagrams() {
+    var blocks = document.querySelectorAll('pre > code.language-mermaid');
+    if (!blocks.length) return;
+    var nodes = [];
+    blocks.forEach(function (code) {
+      var div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = code.textContent;
+      code.parentNode.replaceWith(div);
+      nodes.push(div);
+    });
+    load(MERMAID_SRC).then(function () {
+      var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      window.mermaid.initialize({ startOnLoad: false, theme: dark ? 'dark' : 'default', securityLevel: 'strict' });
+      return window.mermaid.run({ nodes: nodes, suppressErrors: true });
+    }).catch(function () {
+      nodes.forEach(function (div) {
+        if (div.querySelector('svg')) return;
+        var pre = document.createElement('pre');
+        pre.className = 'fallback';
+        pre.textContent = div.textContent;
+        div.replaceWith(pre);
+      });
+    });
+  }
+
+  function renderDocument() {
+    var html = md(data.markdown);
+    if (html === null) return;
+    var doc = document.getElementById('doc');
+    doc.innerHTML = html;
+    // marked adds no heading ids, and table-of-contents links need GitHub's anchors.
+    var seen = {};
+    doc.querySelectorAll('h1,h2,h3,h4,h5,h6').forEach(function (h) {
+      var base = h.textContent.trim().toLowerCase().replace(/[^\p{L}\p{N}_\- ]/gu, '').replace(/ /g, '-');
+      h.id = seen[base] ? base + '-' + seen[base] : base;
+      seen[base] = (seen[base] || 0) + 1;
+    });
+  }
+
+  function renderSlides() {
+    document.querySelectorAll('.slide').forEach(function (el, i) {
+      var s = data.slides[i];
+      var t = inline(s.title);
+      if (t !== null) el.querySelector('.slide-title').innerHTML = t;
+      var b = md(s.body);
+      if (b !== null) el.querySelector('.slide-body').innerHTML = b;
+    });
+  }
+
+  function notesHtml(i) {
+    var s = data.slides[i];
+    if (!s.notes) return '<p class="empty">No notes for this slide.</p>';
+    var h = md(s.notes);
+    if (h !== null) return h;
+    var pre = document.createElement('pre');
+    pre.className = 'fallback';
+    pre.textContent = s.notes;
+    return pre.outerHTML;
+  }
+
+  function startDeck() {
+    var slides = document.querySelectorAll('.slide');
+    var total = slides.length;
+    var current = 0;
+    var panel = document.getElementById('notes-panel');
+    var counter = document.getElementById('counter');
+    var presenter = null;
+    document.body.classList.add('slides');
+
+    function fromHash() {
+      var m = /^#(\d+)$/.exec(location.hash);
+      if (!m) return null;
+      var n = parseInt(m[1], 10);
+      return n >= 1 && n <= total ? n - 1 : null;
+    }
+
+    function updatePresenter() {
+      if (!presenter || presenter.closed) return;
+      var d = presenter.document;
+      var s = data.slides[current];
+      d.getElementById('pos').textContent = (current + 1) + ' / ' + total;
+      d.getElementById('section').textContent = s.section && s.section !== s.title ? s.section : '';
+      d.getElementById('title').innerHTML = slides[current].querySelector('.slide-title').innerHTML;
+      d.getElementById('notes').innerHTML = notesHtml(current);
+      d.getElementById('next').textContent = current + 1 < total ? 'Next: ' + data.slides[current + 1].title : 'Last slide';
+    }
+
+    function show(i) {
+      if (!total) return;
+      current = Math.max(0, Math.min(total - 1, i));
+      slides.forEach(function (el, j) { el.classList.toggle('active', j === current); });
+      counter.textContent = (current + 1) + ' / ' + total;
+      if (!panel.hidden) panel.innerHTML = notesHtml(current);
+      // Some browsers refuse replaceState on file:// pages.
+      try { if (location.hash !== '#' + (current + 1)) history.replaceState(null, '', '#' + (current + 1)); } catch (e) {}
+      updatePresenter();
+    }
+
+    function toggleNotes() {
+      panel.hidden = !panel.hidden;
+      if (!panel.hidden) panel.innerHTML = notesHtml(current);
+    }
+
+    function openPresenter() {
+      if (presenter && !presenter.closed) { presenter.focus(); return; }
+      presenter = window.open('', 'deck-presenter', 'width=760,height=600');
+      if (!presenter) { toggleNotes(); return; }
+      var d = presenter.document;
+      d.open();
+      d.write(PRESENTER_HTML);
+      d.close();
+      d.addEventListener('keydown', onKey);
+      updatePresenter();
+    }
+
+    function onKey(e) {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      var k = e.key;
+      if (k === 'ArrowRight' || k === 'ArrowDown' || k === 'PageDown' || (k === ' ' && !e.shiftKey)) show(current + 1);
+      else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp' || (k === ' ' && e.shiftKey)) show(current - 1);
+      else if (k === 'Home') show(0);
+      else if (k === 'End') show(total - 1);
+      else if (k === 'n' || k === 'N') toggleNotes();
+      else if (k === 'p' || k === 'P') openPresenter();
+      else if (k === 'f' || k === 'F') {
+        if (document.fullscreenElement) document.exitFullscreen();
+        else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+      } else return;
+      e.preventDefault();
+    }
+
+    document.addEventListener('keydown', onKey);
+    document.getElementById('deck').addEventListener('click', function (e) {
+      if (e.target.closest('a') || String(window.getSelection())) return;
+      show(e.clientX < window.innerWidth / 3 ? current - 1 : current + 1);
+    });
+    window.addEventListener('hashchange', function () {
+      var n = fromHash();
+      if (n !== null && n !== current) show(n);
+    });
+    window.addEventListener('beforeunload', function () { if (presenter && !presenter.closed) presenter.close(); });
+    var start = fromHash();
+    show(start === null ? 0 : start);
+  }
+
+  function renderSlots() {
+    document.querySelectorAll('[data-md]').forEach(function (el) {
+      var h = md(data.slots[+el.getAttribute('data-md')]);
+      if (h !== null) el.innerHTML = h;
+    });
+  }
+
+  function renderAll() {
+    if (data.layout === 'slides') renderSlides();
+    else if (data.layout === 'view') renderSlots();
+    else renderDocument();
+    if (hasMarked) drawDiagrams();
+  }
+
+  if (data.layout === 'slides') startDeck();
+  // A document can carry text from outside sources, so raw HTML shows as text and script URLs are dropped.
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function unsafeUrl(href) {
+    var h = String(href || '').replace(/[\s\u0000-\u001f]/g, '').toLowerCase();
+    return /^(javascript|vbscript):/.test(h) || (/^data:/.test(h) && !/^data:image\/(png|gif|jpe?g|webp);/.test(h));
+  }
+  function harden() {
+    window.marked.use({ renderer: {
+      html: function (h) { return escapeHtml(h); },
+      link: function (href, title, text) { return unsafeUrl(href) ? text : false; },
+      image: function (href, title, text) { return unsafeUrl(href) ? escapeHtml(text) : false; }
+    } });
+  }
+
+  load(MARKED_SRC).then(function () { hasMarked = !!window.marked; if (hasMarked) harden(); }, function () {}).then(renderAll);
+})();
+
+</script>
+</body>
+</html>
