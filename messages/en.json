@@ -1,10 +1,98 @@
 {
   "metadata": {
     "title": "Serendib Global Auto",
-    "description": "Vehicle imports from auction to your door."
+    "description": "Vehicle imports from auction to your door.",
+    "homeDescription": "Browse import stock, learn our process, and enquire on WhatsApp.",
+    "aboutDescription": "Who we are and how Serendib Global Auto helps you import vehicles.",
+    "servicesDescription": "Auction sourcing, shipping, and clearance support from one team.",
+    "faqDescription": "Answers about imports, timelines, and working with us.",
+    "contactDescription": "Phone, email, and WhatsApp — we respond on your channel of choice.",
+    "vehiclesDescription": "Current import stock and price-on-request listings."
   },
+  "nav": {
+    "home": "Home",
+    "vehicles": "Vehicles",
+    "services": "Services",
+    "about": "About",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "primary": "Primary"
+  },
+  "cta": {
+    "browseVehicles": "Browse vehicles",
+    "contactUs": "Contact us",
+    "viewAllVehicles": "Browse all vehicles"
+  },
+  "footer": {
+    "contactHeading": "Contact",
+    "navHeading": "Pages",
+    "legalPlaceholder": "Legal information will be added here."
+  },
+  "skipLink": "Skip to main content",
+  "lang": {
+    "en": "EN",
+    "si": "සිං",
+    "switch": "Language"
+  },
+  "fallbackChip": "English",
   "home": {
-    "title": "Serendib Global Auto",
-    "scaffoldNote": "Stage 1 scaffold — static export, TypeScript, Tailwind."
+    "featuredTitle": "Featured vehicles",
+    "featuredEmpty": "No featured vehicles right now.",
+    "servicesTeaser": "Our import services",
+    "defaultHero": "Trusted vehicle imports, from auction to your door",
+    "defaultSub": "Browse available stock, understand our import process, and enquire on WhatsApp."
+  },
+  "vehicles": {
+    "title": "Vehicles",
+    "emptyTitle": "No vehicles listed yet",
+    "emptyBody": "Contact us to discuss imports on request.",
+    "priceOnRequest": "Price on request",
+    "featured": "Featured",
+    "available": "Available",
+    "sold": "Sold",
+    "unavailable": "Unavailable",
+    "filterMake": "Make",
+    "filterFuel": "Fuel",
+    "filterTransmission": "Transmission",
+    "filterAll": "All",
+    "filterEmpty": "No vehicles match these filters.",
+    "clearFilters": "Clear filters"
+  },
+  "vehicleDetail": {
+    "year": "Year",
+    "make": "Make",
+    "model": "Model",
+    "mileage": "Mileage",
+    "transmission": "Transmission",
+    "fuel": "Fuel type",
+    "colour": "Exterior colour",
+    "specsTitle": "Specifications"
+  },
+  "enquiry": {
+    "handoffHint": "Opens WhatsApp with your message — nothing is saved on this website.",
+    "nameLabel": "Your name",
+    "messageLabel": "Message (optional)",
+    "nameRequired": "Please enter your name.",
+    "nameTooLong": "Name is too long.",
+    "messageTooLong": "Message is too long.",
+    "whatsappUnavailable": "WhatsApp is not configured. Use the contact page instead.",
+    "submit": "Enquire on WhatsApp",
+    "defaultMessage": "I would like more information.",
+    "whatsappTemplate": "Hello, I'm {name}. Enquiry about: {vehicle} ({url}). {message}"
+  },
+  "faq": {
+    "title": "FAQ"
+  },
+  "contact": {
+    "title": "Contact",
+    "whatsapp": "WhatsApp",
+    "phone": "Phone",
+    "email": "Email",
+    "whatsappHint": "Opens WhatsApp with your message."
+  },
+  "common": {
+    "brandName": "Serendib Global Auto"
   }
 }

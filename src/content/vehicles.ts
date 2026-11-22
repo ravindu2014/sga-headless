@@ -37,6 +37,8 @@ const VEHICLE_CARD_FIELDS = `{
   make,
   model,
   year,
+  transmission,
+  fuelType,
   availability,
   featured,
   priceLkr,
@@ -93,6 +95,8 @@ function mapVehicleSummary(
     year: row.year,
     featured: Boolean(row.featured),
     availability: row.availability ?? "available",
+    ...(row.transmission ? { transmission: row.transmission } : {}),
+    ...(row.fuelType ? { fuelType: row.fuelType } : {}),
     ...(row.priceLkr != null ? { priceLkr: row.priceLkr } : {}),
     ...(mapSanityImage(row.mainImage)
       ? { mainImage: mapSanityImage(row.mainImage) }
@@ -140,6 +144,7 @@ export async function getVehicles(
 
   const vehicles: VehicleSummaryDto[] = [];
   for (const row of rows) {
+    if (row.availability === "sold") continue;
     const mapped = mapVehicleSummary(row, locale);
     if (mapped) vehicles.push(mapped);
   }

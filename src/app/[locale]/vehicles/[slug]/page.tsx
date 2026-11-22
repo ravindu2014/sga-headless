@@ -1,0 +1,171 @@
+import Image from "next/image";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { hasLocale } from "next-intl";
+import { notFound } from "next/navigation";
+import { getSiteSettings, getVehicleBySlug, getVehicleSlugs } from "@/content";
+import { LocaleText } from "@/components/cms/LocaleText";
+import { AvailabilityBadge } from "@/components/vehicles/AvailabilityBadge";
+import { VehicleEnquiry } from "@/components/vehicles/VehicleEnquiry";
+import { EXPORT_SENTINEL_SLUG } from "@/lib/constants";
+import { formatLkr } from "@/lib/format";
+import { buildPageMetadata } from "@/lib/seo";
+import { absoluteUrl, normalizeSiteOrigin } from "@/lib/site-url";
+import { routing, type Locale } from "@/i18n/routing";
+
+type Props = { params: Promise<{ locale: string; slug: string }> };
+
+export async function generateStaticParams() {
+  const slugs = await getVehicleSlugs();
+  if (slugs.length === 0) {
+    // `output: export` requires at least one prerendered path for dynamic segments.
+    return [{ slug: EXPORT_SENTINEL_SLUG }];
+  }
+  return slugs.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale, slug } = await params;
+  if (slug === EXPORT_SENTINEL_SLUG) return {};
+  if (!hasLocale(routing.locales, locale)) return {};
+  const contentLocale = locale as Locale;
+  const vehicle = await getVehicleBySlug(contentLocale, slug);
+  if (!vehicle) return {};
+  const summary = `${vehicle.year} ${vehicle.make} ${vehicle.model}`;
+  return buildPageMetadata(contentLocale, {
+    path: `vehicles/${slug}`,
+    title: vehicle.title.value,
+    description: summary,
+    imageUrl: vehicle.mainImage?.url,
+    openGraphType: "article",
+  });
+}
+
+export default async function VehicleDetailPage({ params }: Props) {
+  const { locale, slug } = await params;
+  if (slug === EXPORT_SENTINEL_SLUG) {
+    notFound();
+  }
+  setRequestLocale(locale);
+  const contentLocale = locale as Locale;
+
+  const [vehicle, settings] = await Promise.all([
+    getVehicleBySlug(contentLocale, slug),
+    getSiteSettings(contentLocale),
+  ]);
+
+  if (!vehicle) {
+    notFound();
+  }
+
+  const t = await getTranslations("vehicles");
+  const detail = await getTranslations("vehicleDetail");
+  const priceLabel =
+    vehicle.priceLkr != null
+      ? formatLkr(vehicle.priceLkr, contentLocale)
+      : t("priceOnRequest");
+
+  const pageUrl = absoluteUrl(
+    normalizeSiteOrigin(settings?.canonicalBaseUrl),
+    contentLocale,
+    `vehicles/${vehicle.slug}`,
+  );
+
+  const specRows: { label: string; value: string }[] = [
+    { label: detail("year"), value: String(vehicle.year) },
+    { label: detail("make"), value: vehicle.make },
+    { label: detail("model"), value: vehicle.model },
+    ...(vehicle.mileage != null
+      ? [{ label: detail("mileage"), value: `${vehicle.mileage.toLocaleString()} km` }]
+      : []),
+    ...(vehicle.transmission
+      ? [{ label: detail("transmission"), value: vehicle.transmission }]
+      : []),
+    ...(vehicle.fuelType
+      ? [{ label: detail("fuel"), value: vehicle.fuelType }]
+      : []),
+    ...(vehicle.exteriorColour
+      ? [{ label: detail("colour"), value: vehicle.exteriorColour }]
+      : []),
+  ];
+
+  return (
+    <main className="mx-auto max-w-content px-page-gutter-mobile py-section-y md:px-page-gutter-desktop">
+      <div className="flex flex-wrap items-center gap-2">
+        <AvailabilityBadge availability={vehicle.availability} />
+        {vehicle.featured ? (
+          <span className="inline-block rounded-full bg-primary px-2 py-0.5 text-label font-medium text-on-primary">
+            {t("featured")}
+          </span>
+        ) : null}
+      </div>
+      <h1 className="mt-3 text-display-mobile text-primary md:text-display">
+        {vehicle.title.value}
+      </h1>
+      <p className="mt-2 text-body-sm text-on-surface-muted">
+        {vehicle.year} · {vehicle.make} · {vehicle.model}
+      </p>
+
+      <div className="mt-8 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
+        <div className="space-y-4">
+          {vehicle.mainImage?.url ? (
+            <Image
+              src={vehicle.mainImage.url}
+              alt={vehicle.mainImage.alt ?? vehicle.title.value}
+              width={1400}
+              height={1050}
+              className="w-full rounded-container border border-border object-cover"
+              priority
+            />
+          ) : null}
+          {vehicle.gallery.length > 0 ? (
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+              {vehicle.gallery.map((img, index) => (
+                <Image
+                  key={index}
+                  src={img.url}
+                  alt={img.alt ?? `${vehicle.title.value} ${index + 1}`}
+                  width={480}
+                  height={360}
+                  className="aspect-[4/3] w-full rounded-container border border-border object-cover"
+                />
+              ))}
+            </div>
+          ) : null}
+        </div>
+        <aside className="rounded-container border border-border p-card-padding lg:sticky lg:top-6">
+          <p className="text-price text-on-surface">{priceLabel}</p>
+          {vehicle.description ? (
+            <LocaleText
+              value={vehicle.description}
+              className="mt-4 text-body text-on-surface"
+            />
+          ) : null}
+          <h2 className="mt-6 text-title text-primary">{detail("specsTitle")}</h2>
+          <dl className="mt-3 space-y-2 text-body-sm">
+            {specRows.map((row) => (
+              <div key={row.label} className="flex justify-between gap-4 border-b border-border pb-2">
+                <dt className="text-on-surface-muted">{row.label}</dt>
+                <dd className="font-medium text-on-surface">{row.value}</dd>
+              </div>
+            ))}
+          </dl>
+          {vehicle.features ? (
+            <LocaleText
+              value={vehicle.features}
+              as="div"
+              className="mt-4 whitespace-pre-wrap text-body-sm text-on-surface-muted"
+            />
+          ) : null}
+          {settings ? (
+            <VehicleEnquiry
+              whatsapp={settings.whatsapp}
+              vehicleTitle={vehicle.title.value}
+              pageUrl={pageUrl}
+            />
+          ) : null}
+        </aside>
+      </div>
+    </main>
+  );
+}

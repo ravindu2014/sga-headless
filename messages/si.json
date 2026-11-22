@@ -1,10 +1,98 @@
 {
   "metadata": {
     "title": "Serendib Global Auto",
-    "description": "වෙන්දේසියේ සිට ඔබේ දොරට වාහන ආනයනය."
+    "description": "වෙන්දේසියේ සිට ඔබේ දොරට වාහන ආනයනය.",
+    "homeDescription": "ආනයන වාහන බලන්න, ක්‍රියාවලිය ඉගෙන ගෙන WhatsApp හරහා විමසන්න.",
+    "aboutDescription": "Serendib Global Auto සහ ආනයන සේවාව ගැන.",
+    "servicesDescription": "වෙන්දේසිය, නැව්ගත කිරීම සහ නිදහස් කිරීමේ සහය.",
+    "faqDescription": "ආනයන, කාලසීමා සහ සේවාව පිළිබඳ පිළිතුරු.",
+    "contactDescription": "දුරකථන, ඊමේල් සහ WhatsApp සම්බන්ධතා.",
+    "vehiclesDescription": "දැනට ලැබෙන ආනයන වාහන සහ මිල විමසීමට."
   },
+  "nav": {
+    "home": "මුල් පිටුව",
+    "vehicles": "වාහන",
+    "services": "සේවාවන්",
+    "about": "අප ගැන",
+    "faq": "නිති අසන පැන්",
+    "contact": "සම්බන්ධ වන්න",
+    "menuOpen": "මෙනුව විවෘත කරන්න",
+    "menuClose": "මෙනුව වසන්න",
+    "primary": "ප්‍රධාන මෙනුව"
+  },
+  "cta": {
+    "browseVehicles": "වාහන බලන්න",
+    "contactUs": "අප අමතන්න",
+    "viewAllVehicles": "සියලු වාහන බලන්න"
+  },
+  "footer": {
+    "contactHeading": "සම්බන්ධතා",
+    "navHeading": "පිටු",
+    "legalPlaceholder": "නෛතික තොරතුරු මෙහි එක් කෙරෙනු ඇත."
+  },
+  "skipLink": "ප්‍රධාන අන්තර්ගතයට යන්න",
+  "lang": {
+    "en": "EN",
+    "si": "සිං",
+    "switch": "භාෂාව"
+  },
+  "fallbackChip": "English",
   "home": {
-    "title": "Serendib Global Auto",
-    "scaffoldNote": "පළමු අදියර — ස්ථිතික නිර්යාතය, TypeScript, Tailwind."
+    "featuredTitle": "විශේෂිත වාහන",
+    "featuredEmpty": "දැනට විශේෂිත වාහන නැත.",
+    "servicesTeaser": "අපගේ ආනයන සේවා",
+    "defaultHero": "වෙන්දේසියේ සිට ඔබේ දොරට — විශ්වාසදායී වාහන ආනයනය",
+    "defaultSub": "ලබා ගත හැකි තොරතුරු බලන්න, ආනයන ක්‍රියාවලිය දැනගෙන WhatsApp හරහා විමසන්න."
+  },
+  "vehicles": {
+    "title": "වාහන",
+    "emptyTitle": "දැනට ලැයිස්තුගත වාහන නැත",
+    "emptyBody": "ඉල්ලීම මත ආනයනය ගැන අප අමතන්න.",
+    "priceOnRequest": "මිල විමසීමට",
+    "featured": "විශේෂිත",
+    "available": "ලබා ගත හැක",
+    "sold": "විකිණුණු",
+    "unavailable": "ලබා නොහැක",
+    "filterMake": "නිෂ්පාදකය",
+    "filterFuel": "ඉන්ධන",
+    "filterTransmission": "ගියර් පෙට්ටිය",
+    "filterAll": "සියල්ල",
+    "filterEmpty": "මෙම filter වලට ගැලපෙන වාහන නැත.",
+    "clearFilters": "Filter ඉවත් කරන්න"
+  },
+  "vehicleDetail": {
+    "year": "අවුරුද්ද",
+    "make": "නිෂ්පාදකය",
+    "model": "මොඩලය",
+    "mileage": "දුර mileage",
+    "transmission": "ගියර්",
+    "fuel": "ඉන්ධන වර්ගය",
+    "colour": "බාහිර වර්ණය",
+    "specsTitle": "විශේෂණ"
+  },
+  "enquiry": {
+    "handoffHint": "ඔබගේ පණිවිඩය සමඟ WhatsApp විවෘත වේ — මෙම වෙබ් අඩවියේ සුරකින්නේ නැත.",
+    "nameLabel": "ඔබගේ නම",
+    "messageLabel": "පණිවිඩය (විකල්ප)",
+    "nameRequired": "කරුණාකර නම ඇතුළත් කරන්න.",
+    "nameTooLong": "නම දිග වැඩියි.",
+    "messageTooLong": "පණිවිඩය දිග වැඩියි.",
+    "whatsappUnavailable": "WhatsApp සකසා නැත. සම්බන්ධතා පිටුව භාවිතා කරන්න.",
+    "submit": "WhatsApp හරහා විමසන්න",
+    "defaultMessage": "තව දැනගැනීමට අවශ්‍යයි.",
+    "whatsappTemplate": "ආයුබෝවන්, මම {name}. විමසුම: {vehicle} ({url}). {message}"
+  },
+  "faq": {
+    "title": "නිති අසන පැණ"
+  },
+  "contact": {
+    "title": "සම්බන්ධ වන්න",
+    "whatsapp": "WhatsApp",
+    "phone": "දුරකථන",
+    "email": "ඊමේල්",
+    "whatsappHint": "ඔබගේ පණිවිඩය සමඟ WhatsApp විවෘත වේ."
+  },
+  "common": {
+    "brandName": "Serendib Global Auto"
   }
 }

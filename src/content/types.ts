@@ -65,6 +65,8 @@ export type VehicleSummaryDto = {
   year: number;
   featured: boolean;
   availability: VehicleAvailability;
+  fuelType?: string;
+  transmission?: string;
   priceLkr?: number;
   mainImage?: ImageDto;
 };

@@ -7,6 +7,7 @@ export { getContentLayerStatus } from "./health";
 export { getAboutPage, getContactPage, getHomePage } from "./pages";
 export { getServicesPage } from "./services";
 export { getSiteSettings } from "./site-settings";
+export { generateVehicleDetailSlugParams } from "./vehicle-paths";
 export {
   getFeaturedVehicles,
   getVehicleBySlug,
@@ -24,6 +25,7 @@ export type {
   LocalizedField,
   LocalizedValue,
   MarketingPageDto,
+  PortableTextValue,
   ServiceItemDto,
   ServicesPageDto,
   SiteSettingsDto,

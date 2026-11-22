@@ -1,76 +1,87 @@
-import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
-import { routing, type Locale } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import {
-  getContentLayerStatus,
   getFeaturedVehicles,
   getHomePage,
-  getSiteSettings,
+  type MarketingPageDto,
 } from "@/content";
+import { MarketingHero } from "@/components/cms/MarketingHero";
+import { PortableTextBody } from "@/components/cms/PortableTextBody";
+import { VehicleCard } from "@/components/vehicles/VehicleCard";
+import { routing, localeStaticParams, type Locale } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo";
 
-type Props = {
-  params: Promise<{ locale: string }>;
-};
+type Props = { params: Promise<{ locale: string }> };
+
+export function generateStaticParams() {
+  return localeStaticParams();
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-
-  if (!hasLocale(routing.locales, locale)) {
-    return {};
-  }
-
-  const t = await getTranslations({ locale, namespace: "metadata" });
-  const site = await getSiteSettings(locale as Locale);
-
-  return {
-    title: site?.seoTitle?.value ?? t("title"),
-    description: site?.seoDescription?.value ?? t("description"),
-  };
+  if (!hasLocale(routing.locales, locale)) return {};
+  const [tNav, tMeta] = await Promise.all([
+    getTranslations({ locale, namespace: "nav" }),
+    getTranslations({ locale, namespace: "metadata" }),
+  ]);
+  return buildPageMetadata(locale as Locale, {
+    title: tNav("home"),
+    description: tMeta("homeDescription"),
+  });
 }
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const contentLocale = locale as Locale;
-
-  await getContentLayerStatus();
-  await getHomePage(contentLocale);
-  await getFeaturedVehicles(contentLocale);
-
   const t = await getTranslations("home");
+  const cta = await getTranslations("cta");
+
+  const cms = await getHomePage(contentLocale);
+  const featured = await getFeaturedVehicles(contentLocale);
+
+  const page: MarketingPageDto = cms ?? {
+    heroHeadline: { value: t("defaultHero"), usedFallback: false },
+    heroSubheadline: { value: t("defaultSub"), usedFallback: false },
+  };
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-content flex-col items-center justify-center gap-6 px-page-gutter-mobile py-section-y text-center md:px-page-gutter-desktop">
-      <Image
-        src="/brand/sga_small_logo.jpg"
-        alt={t("title")}
-        width={200}
-        height={80}
-        className="h-10 w-auto"
-        priority
+    <main>
+      <MarketingHero
+        page={page}
+        primaryCta={{ href: "/vehicles", label: cta("browseVehicles") }}
+        secondaryCta={{ href: "/contact", label: cta("contactUs") }}
       />
-      <h1 className="text-display-mobile text-primary md:text-display">
-        {t("title")}
-      </h1>
-      <p className="max-w-prose text-body text-on-surface-muted">
-        {t("scaffoldNote")}
-      </p>
-      <div
-        className="w-full max-w-sm rounded-container border border-border bg-surface p-card-padding text-left"
-        aria-hidden
-      >
-        <p className="text-label text-primary">Design tokens</p>
-        <p className="mt-2 text-body-sm text-on-surface">
-          Primary navy, accent crimson,{" "}
-          <span className="text-accent">3px container radius</span>, catalogue
-          gap 1.5rem.
-        </p>
-      </div>
-      <span className="inline-flex min-h-tap cursor-default items-center justify-center rounded-md bg-accent px-6 font-semibold text-body text-on-accent">
-        Browse vehicles
-      </span>
+      {page.body ? (
+        <section className="mx-auto max-w-prose px-page-gutter-mobile pb-section-y md:px-page-gutter-desktop">
+          <PortableTextBody value={page.body} />
+        </section>
+      ) : null}
+      <section className="border-t border-border">
+        <div className="mx-auto max-w-content px-page-gutter-mobile py-section-y md:px-page-gutter-desktop">
+          <h2 className="text-headline text-primary">{t("featuredTitle")}</h2>
+          {featured.length ? (
+            <div className="mt-6 grid gap-catalogue-gap bg-background sm:grid-cols-2 lg:grid-cols-3">
+              {featured.map((vehicle) => (
+                <VehicleCard
+                  key={vehicle.slug}
+                  vehicle={vehicle}
+                  locale={contentLocale}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="mt-4 text-body text-on-surface-muted">
+              {t("featuredEmpty")}{" "}
+              <Link href="/vehicles" className="text-primary hover:underline">
+                {cta("viewAllVehicles")}
+              </Link>
+            </p>
+          )}
+        </div>
+      </section>
     </main>
   );
 }
