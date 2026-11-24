@@ -88,15 +88,19 @@ npm run deploy:pages
 
 ### Alternative: Cloudflare Git build (Pages)
 
-If you connect the repo in the Cloudflare UI instead of Actions, use **Pages** static hosting — **not** a Workers deploy command.
+If you connect the repo in the Cloudflare UI, use these values exactly.
 
 | Setting | Value |
 |---------|--------|
-| **Build command** | `npm run build` (install step runs `npm ci` automatically) |
+| **Build command** | `npm run build` |
 | **Build output directory** | `out` |
-| **Deploy command** | *Leave empty* — do **not** use `npx wrangler deploy` (Workers). Pages publishes `out/` for you. |
-| **Node** | `20` (set **Environment variable** `NODE_VERSION` = `20`, or rely on repo [`.nvmrc`](../.nvmrc)) |
+| **Deploy command** | `npm run pages:deploy` |
+| **Node** | **`22.12.0` or newer** — set env `NODE_VERSION` = `22.12.0` (Wrangler 4 fails on Node 20) |
 | **Env vars** | `SANITY_PROJECT_ID=n2zalqm8`, `SANITY_DATASET=production` |
+
+**Do not use** `npx wrangler deploy` — that targets **Workers**, not the static `out/` folder. The repo script runs `wrangler pages deploy out`.
+
+If your Cloudflare UI lets you omit a deploy command, leave it empty and rely on the output directory only; otherwise use `npm run pages:deploy`.
 
 Commit an updated [`package-lock.json`](../package-lock.json) whenever `package.json` changes; `npm ci` on Cloudflare fails if they are out of sync.
 
