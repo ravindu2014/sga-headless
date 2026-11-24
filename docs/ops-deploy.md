@@ -86,21 +86,26 @@ export CLOUDFLARE_ACCOUNT_ID=…
 npm run deploy:pages
 ```
 
-### Alternative: Cloudflare Git build (Pages)
+### Alternative: Cloudflare Workers Builds (Git)
 
-If you connect the repo in the Cloudflare UI, use these values exactly.
+The dashboard shows **Build command** + **Deploy command** only (no “Build output directory”). Static output is declared in [`wrangler.toml`](../wrangler.toml) as `pages_build_output_dir = "out"`.
 
 | Setting | Value |
 |---------|--------|
 | **Build command** | `npm run build` |
-| **Build output directory** | `out` |
-| **Deploy command** | `npm run pages:deploy` (no-op on Cloudflare; publishes `out/` via output directory) |
-| **Node** | **`22.12.0` or newer** — env `NODE_VERSION` = `22.12.0` |
-| **Env vars** | `SANITY_PROJECT_ID=n2zalqm8`, `SANITY_DATASET=production` only |
+| **Deploy command** | `npm run pages:deploy` |
+| **Node** | `NODE_VERSION` = `22.12.0` |
+| **Variables** (project env) | `SANITY_PROJECT_ID`, `SANITY_DATASET` only — **no** `CLOUDFLARE_API_TOKEN` here |
 
-**Do not use** `npx wrangler deploy` (Workers).
+#### Fix Authentication error [10000]
 
-**Do not set** `CLOUDFLARE_API_TOKEN` on the Pages **build** environment unless you run a real `wrangler pages deploy` there. A token with wrong scopes causes **Authentication error [10000]**; Git builds should rely on `out/` + `npm run pages:deploy` (see [`scripts/cf-pages-deploy.mjs`](../scripts/cf-pages-deploy.mjs)).
+Wrangler logs `The API Token is read from the CLOUDFLARE_API_TOKEN environment variable` when that variable is set under **Settings → Variables**. It **overrides** the token chosen in **Settings → Builds → Build configuration → API token**, and often fails with code **10000** if the variable token is wrong or missing Pages scopes.
+
+1. **Delete** `CLOUDFLARE_API_TOKEN` (and `CLOUDFLARE_ACCOUNT_ID` if only used for Wrangler) from **Project → Settings → Variables**.
+2. Open **Settings → Builds → Build configuration → API token** → **Create new token** (or pick one with **Account → Cloudflare Pages → Edit** and **Workers Scripts → Edit**).
+3. Retry the build.
+
+[`scripts/cf-pages-deploy.mjs`](../scripts/cf-pages-deploy.mjs) runs **`wrangler pages deploy out`** with `--account-id` from [`wrangler.toml`](../wrangler.toml). If **curl** succeeds locally but Cloudflare fails with **10000**, the token in **Variables** is usually not the same string (typo, old value, trailing newline) — compare **token length** in the deploy log with `echo -n "$TOKEN" | wc -c` locally.
 
 Commit an updated [`package-lock.json`](../package-lock.json) whenever `package.json` changes; `npm ci` on Cloudflare fails if they are out of sync.
 
