@@ -27,7 +27,7 @@ Uses **“sga-headless build token”** (or replace it).
 Default Workers Builds tokens often have **Workers Scripts → Edit** but **not** **Cloudflare Pages → Edit**.  
 `wrangler pages deploy` needs **Pages → Edit** and fails with **Authentication error [10000]**.
 
-Deploy runs **`wrangler pages deploy out`** (required for a Pages project — `wrangler deploy` fails without a Worker script). The **Builds → API token** must include **Cloudflare Pages → Edit**.
+Deploy runs **`wrangler pages deploy out`**. The **Pages** project `sga-headless` must exist (the deploy script runs `wrangler pages project create` on first deploy). The **Builds → API token** must include **Cloudflare Pages → Edit**.
 
 **If deploy still fails:**
 

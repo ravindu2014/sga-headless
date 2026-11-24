@@ -1,6 +1,6 @@
-# Cloudflare account for local/GHA wrangler (Workers Builds uses Builds → API token).
-# Static files: npm run build → out/ → npm run pages:deploy (wrangler pages deploy).
+# Static Next export: build → out/ → wrangler pages deploy (see scripts/cf-pages-deploy.mjs).
 
 name = "sga-headless"
 compatibility_date = "2024-11-01"
 account_id = "0b8c86656a7d4d2757064a856209af7a"
+pages_build_output_dir = "out"

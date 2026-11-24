@@ -1,8 +1,5 @@
 /**
- * Deploy static export (`out/`) to Cloudflare Pages.
- *
- * Workers Builds UI: Build `npm run build`, Deploy `npm run pages:deploy`.
- * Use `wrangler pages deploy` (not `wrangler deploy` — that needs a Worker entry).
+ * Deploy `out/` to a Cloudflare Pages project (Workers Builds deploy step).
  */
 import { existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
@@ -21,23 +18,38 @@ if (env.CLOUDFLARE_API_TOKEN) {
   env.CLOUDFLARE_API_TOKEN = env.CLOUDFLARE_API_TOKEN.trim();
 }
 
-const args = [
+function run(args) {
+  return spawnSync("npx", args, { stdio: "inherit", env, shell: false });
+}
+
+console.log(
+  `cf-pages-deploy: ensure Pages project "${PROJECT_NAME}" exists…`,
+);
+const create = run([
+  "wrangler",
+  "pages",
+  "project",
+  "create",
+  PROJECT_NAME,
+  "--production-branch=main",
+]);
+
+if (create.status !== 0 && create.status !== null) {
+  console.log(
+    "cf-pages-deploy: create skipped (project may already exist — continuing).",
+  );
+}
+
+console.log(
+  `cf-pages-deploy: wrangler pages deploy out --project-name=${PROJECT_NAME}`,
+);
+const deploy = run([
   "wrangler",
   "pages",
   "deploy",
   "out",
   `--project-name=${PROJECT_NAME}`,
-];
+  "--branch=main",
+]);
 
-const branch =
-  process.env.CF_PAGES_BRANCH?.trim() ||
-  process.env.GITHUB_REF_NAME?.trim() ||
-  process.env.CI_COMMIT_BRANCH?.trim();
-if (branch) {
-  args.push(`--branch=${branch}`);
-}
-
-console.log(`cf-pages-deploy: npx ${args.join(" ")}`);
-
-const result = spawnSync("npx", args, { stdio: "inherit", env, shell: false });
-process.exit(result.status === null ? 1 : result.status);
+process.exit(deploy.status === null ? 1 : deploy.status);
