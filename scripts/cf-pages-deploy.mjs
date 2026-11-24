@@ -1,5 +1,5 @@
 /**
- * Deploy `out/` to a Cloudflare Pages project (Workers Builds deploy step).
+ * Deploy `out/` to Cloudflare Pages (Workers Builds deploy step).
  */
 import { existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
@@ -18,38 +18,21 @@ if (env.CLOUDFLARE_API_TOKEN) {
   env.CLOUDFLARE_API_TOKEN = env.CLOUDFLARE_API_TOKEN.trim();
 }
 
-function run(args) {
-  return spawnSync("npx", args, { stdio: "inherit", env, shell: false });
-}
-
-console.log(
-  `cf-pages-deploy: ensure Pages project "${PROJECT_NAME}" exists…`,
-);
-const create = run([
-  "wrangler",
-  "pages",
-  "project",
-  "create",
-  PROJECT_NAME,
-  "--production-branch=main",
-]);
-
-if (create.status !== 0 && create.status !== null) {
-  console.log(
-    "cf-pages-deploy: create skipped (project may already exist — continuing).",
-  );
-}
-
 console.log(
   `cf-pages-deploy: wrangler pages deploy out --project-name=${PROJECT_NAME}`,
 );
-const deploy = run([
-  "wrangler",
-  "pages",
-  "deploy",
-  "out",
-  `--project-name=${PROJECT_NAME}`,
-  "--branch=main",
-]);
 
-process.exit(deploy.status === null ? 1 : deploy.status);
+const result = spawnSync(
+  "npx",
+  [
+    "wrangler",
+    "pages",
+    "deploy",
+    "out",
+    `--project-name=${PROJECT_NAME}`,
+    "--branch=main",
+  ],
+  { stdio: "inherit", env, shell: false },
+);
+
+process.exit(result.status === null ? 1 : result.status);
