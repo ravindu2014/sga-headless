@@ -86,16 +86,21 @@ export CLOUDFLARE_ACCOUNT_ID=…
 npm run deploy:pages
 ```
 
-### Alternative: Cloudflare Git build
+### Alternative: Cloudflare Git build (Pages)
 
-If you connect the repo in the Cloudflare UI instead of Actions:
+If you connect the repo in the Cloudflare UI instead of Actions, use **Pages** static hosting — **not** a Workers deploy command.
 
-- **Build command:** `npm ci && npm run build`
-- **Build output directory:** `out`
-- **Node:** 20
-- **Environment variables:** `SANITY_PROJECT_ID`, `SANITY_DATASET`
+| Setting | Value |
+|---------|--------|
+| **Build command** | `npm run build` (install step runs `npm ci` automatically) |
+| **Build output directory** | `out` |
+| **Deploy command** | *Leave empty* — do **not** use `npx wrangler deploy` (Workers). Pages publishes `out/` for you. |
+| **Node** | `20` (set **Environment variable** `NODE_VERSION` = `20`, or rely on repo [`.nvmrc`](../.nvmrc)) |
+| **Env vars** | `SANITY_PROJECT_ID=n2zalqm8`, `SANITY_DATASET=production` |
 
-You would then disable the **deploy** job in `rebuild.yml` or uncheck deploy on manual runs to avoid double publishes.
+Commit an updated [`package-lock.json`](../package-lock.json) whenever `package.json` changes; `npm ci` on Cloudflare fails if they are out of sync.
+
+You can disable the GitHub **deploy** job (`CLOUDFLARE_DEPLOY_ENABLED` unset) to avoid double publishes when using Git-connected Pages.
 
 ## After publish checklist
 
