@@ -1,5 +1,6 @@
 import "server-only";
 
+import { unstable_cache } from "next/cache";
 import { mapSanityImage } from "./images";
 import { resolveLocalizedField } from "./locale";
 import { sanityFetch } from "./sanity-fetch";
@@ -58,14 +59,19 @@ const VEHICLE_FIELDS = `{
 
 const VEHICLE_LIST_QUERY = `*[_type == "vehicle" && defined(slug.current)] | order(_updatedAt desc)${VEHICLE_FIELDS}`;
 
-/** One Sanity request per build worker so catalogue, featured, detail, and slugs stay aligned. */
-let vehicleRowsPromise: Promise<VehicleDocument[] | null> | null = null;
+async function loadVehicleRowsUncached(): Promise<VehicleDocument[] | null> {
+  return sanityFetch<VehicleDocument[] | null>(VEHICLE_LIST_QUERY);
+}
+
+/** One Sanity snapshot per build for catalogue, featured, detail, and slugs (parallel SSG). */
+const loadVehicleRows = unstable_cache(
+  loadVehicleRowsUncached,
+  ["sanity-vehicle-rows"],
+  { revalidate: false },
+);
 
 function fetchVehicleRows(): Promise<VehicleDocument[] | null> {
-  if (!vehicleRowsPromise) {
-    vehicleRowsPromise = sanityFetch<VehicleDocument[] | null>(VEHICLE_LIST_QUERY);
-  }
-  return vehicleRowsPromise;
+  return loadVehicleRows();
 }
 
 function mapVehicleSummary(

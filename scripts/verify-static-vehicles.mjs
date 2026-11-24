@@ -25,7 +25,11 @@ if (!existsSync(indexPath)) {
 }
 
 const html = readFileSync(indexPath, "utf8");
-const missing = slugs.filter((slug) => !html.includes(`/vehicles/${slug}`));
+const missing = slugs.filter(
+  (slug) =>
+    !html.includes(`/vehicles/${slug}`) &&
+    !html.includes(`/en/vehicles/${slug}`),
+);
 if (missing.length > 0) {
   console.error(
     "[verify-static-vehicles] Catalogue HTML missing slugs that have detail pages:",

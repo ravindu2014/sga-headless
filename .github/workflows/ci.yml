@@ -1,7 +1,7 @@
 name: CI
 
+# Quality gate on PRs only. Pushes to main use rebuild.yml (build + deploy) — avoids duplicate builds.
 on:
-  push:
   pull_request:
 
 concurrency:
@@ -36,6 +36,6 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # Read-only Sanity CDN; defaults match .env.example (no secrets required).
           SANITY_PROJECT_ID: n2zalqm8
           SANITY_DATASET: production
+          SANITY_USE_CDN: "false"

@@ -12,7 +12,8 @@ export function getSanityClient(): SanityClient {
       projectId,
       dataset,
       apiVersion,
-      useCdn: true,
+      // API (not CDN) at build time so publish → rebuild sees new vehicles immediately.
+      useCdn: process.env.SANITY_USE_CDN === "true",
     });
   }
   return client;

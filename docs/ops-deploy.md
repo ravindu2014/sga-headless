@@ -3,6 +3,19 @@
 Static site: **Next.js `output: export`** → `out/` → **Cloudflare Pages** (when connected).  
 Content: **Sanity** `n2zalqm8` / `production`, read-only at build time.
 
+## Canonical CI/CD (one build per event)
+
+| Layer | Keep? | Role |
+|-------|-------|------|
+| GitHub **CI** (`ci.yml`) | Yes | Runs on **pull requests** only — lint, typecheck, build. No deploy. |
+| GitHub **Rebuild site** (`rebuild.yml`) | Yes | Runs on **push to `main`**, manual dispatch, Sanity webhook — build, artifact, **Pages deploy**. |
+| Cloudflare **Pages** `sga-headless` | Yes | Hosts static files (`*.pages.dev` / custom domain). **No Git connect** — fed by Actions `wrangler pages deploy`. |
+| Cloudflare **Worker** `sga-sanity-rebuild` | Yes | Webhook relay only (not the website). |
+| Cloudflare **Worker** `sga-headless` (Git-linked) | **Remove** | Wrong type; duplicates/confuses deploy. Disconnect repo or delete the Worker project. |
+| Cloudflare **Workers Builds** on the marketing site | **No** | Do not build the Next app in Cloudflare dashboard if GitHub **Rebuild** deploys. |
+
+**Best practice for this repo:** GitHub owns build + deploy; Cloudflare hosts Pages + one small Worker. PR → CI; merge / publish → Rebuild once.
+
 ## Dual deploy triggers (AD-7)
 
 | Trigger | Purpose |
@@ -16,7 +29,7 @@ Content: **Sanity** `n2zalqm8` / `production`, read-only at build time.
 2. Optionally add a short reason in the input (log only).
 3. Download the **next-static-out** artifact from the completed run, or rely on Cloudflare’s Git integration once configured.
 
-CI on push/PR still runs [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) (no artifact upload).
+CI on **pull requests** runs [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) (no deploy). Pushes to `main` run **Rebuild site** only.
 
 ### Sanity → GitHub auto-rebuild (webhook relay)
 

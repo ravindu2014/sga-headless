@@ -52,6 +52,8 @@ jobs:
         env:
           SANITY_PROJECT_ID: n2zalqm8
           SANITY_DATASET: production
+          # Explicit API (not CDN) so webhooks right after publish see new vehicles.
+          SANITY_USE_CDN: "false"
 
       - name: Upload static artifact
         uses: actions/upload-artifact@v4

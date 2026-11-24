@@ -9,7 +9,11 @@ export async function sanityFetch<T>(
   try {
     return await getSanityClient().fetch<T>(query, params ?? {});
   } catch (error) {
-    if (process.env.NODE_ENV === "development") {
+    const verbose =
+      process.env.NODE_ENV === "development" ||
+      process.env.CI === "true" ||
+      process.env.npm_lifecycle_event === "build";
+    if (verbose) {
       console.warn("[content] Sanity fetch failed:", error);
     }
     return null;
