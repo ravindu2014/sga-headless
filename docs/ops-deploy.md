@@ -86,6 +86,8 @@ export CLOUDFLARE_ACCOUNT_ID=…
 npm run deploy:pages
 ```
 
+See [cloudflare-dashboard.md](./cloudflare-dashboard.md) for settings aligned with your Workers Builds UI (no output-directory field).
+
 ### Alternative: Cloudflare Workers Builds (Git)
 
 The dashboard shows **Build command** + **Deploy command** only (no “Build output directory”). Static output is declared in [`wrangler.toml`](../wrangler.toml) as `pages_build_output_dir = "out"`.

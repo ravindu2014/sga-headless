@@ -1,5 +1,12 @@
 /**
- * Deploy `out/` to Cloudflare Pages (Workers Builds + local + GitHub Actions).
+ * Deploy static export (`out/`) for Cloudflare Workers Builds + local/GHA.
+ *
+ * Cloudflare dashboard (your screenshots): Build `npm run build`, Deploy
+ * `npm run pages:deploy` — no separate “output directory” field. Static files
+ * are declared in wrangler.toml via `pages_build_output_dir = "out"`.
+ *
+ * On Cloudflare builders: `wrangler deploy` (matches Workers Builds + wrangler.toml).
+ * Elsewhere: `wrangler pages deploy` (explicit Pages project + your API token).
  */
 import { existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
@@ -35,24 +42,29 @@ env.CLOUDFLARE_ACCOUNT_ID = env.CLOUDFLARE_ACCOUNT_ID?.trim() || ACCOUNT_ID;
 if (env.CLOUDFLARE_API_TOKEN) {
   env.CLOUDFLARE_API_TOKEN = env.CLOUDFLARE_API_TOKEN.trim();
   console.log(
-    `cf-pages-deploy: CLOUDFLARE_API_TOKEN length=${env.CLOUDFLARE_API_TOKEN.length} (compare with local curl token)`,
+    `cf-pages-deploy: CLOUDFLARE_API_TOKEN length=${env.CLOUDFLARE_API_TOKEN.length}`,
   );
 } else if (onCf) {
   console.log(
-    "cf-pages-deploy: no CLOUDFLARE_API_TOKEN in env — using Workers Builds configured token.",
+    "cf-pages-deploy: using Workers Builds API token (Builds → API token).",
   );
 }
 
-if (onCf && process.env.CLOUDFLARE_API_TOKEN) {
-  console.warn(
-    "cf-pages-deploy: If deploy fails with 10000 but curl works locally, the variable token here is NOT the same as your local token (re-paste or remove it).",
+if (onCf) {
+  console.log(
+    "cf-pages-deploy: wrangler deploy (pages_build_output_dir=out in wrangler.toml)",
   );
+  const result = spawnSync("npx", ["wrangler", "deploy"], {
+    stdio: "inherit",
+    env,
+    shell: false,
+  });
+  process.exit(result.status === null ? 1 : result.status);
 }
 
 console.log(
-  `cf-pages-deploy: wrangler pages deploy → project=${PROJECT_NAME} account=${env.CLOUDFLARE_ACCOUNT_ID}`,
+  `cf-pages-deploy: wrangler pages deploy → project=${PROJECT_NAME}`,
 );
-
 const result = spawnSync(
   "npx",
   ["wrangler", "pages", "deploy", "out", `--project-name=${PROJECT_NAME}`],
