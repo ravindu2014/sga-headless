@@ -64,7 +64,7 @@ No runtime origin server in Stage 1.
 - **Prevents:** Client-side live catalogue fetch in production
 - **Rule:** Fetch published documents during build; vehicle slugs drive `generateStaticParams`.
 
-**Build consistency (2026-11-24):** For vehicles, use **one GROQ list fetch per build worker** (`fetchVehicleRows()` in `src/content/vehicles.ts`) so catalogue, featured strip, slug enumeration, and detail pages share the same CMS snapshot. In CI and Cloudflare builds, read Sanity via the **API** (`useCdn` off unless `SANITY_USE_CDN=true`) so publish → rebuild does not split “empty catalogue” HTML from live detail routes. After `next build`, **`scripts/verify-static-vehicles.mjs`** must pass: every `out/en/vehicles/<slug>.html` (except export sentinel) must appear as a link on `out/en/vehicles.html`.
+**Build consistency (2026-11-24):** For vehicles, use **one GROQ list per static export** (`unstable_cache` around `fetchVehicleRows()` in `src/content/vehicles.ts`) so catalogue, featured strip, slug enumeration, and detail pages share the same CMS snapshot under parallel SSG. In CI and Cloudflare builds, read Sanity via the **API** (`useCdn` only when `SANITY_USE_CDN=true`) so publish → rebuild sees new documents immediately. After `next build`, **`scripts/verify-static-vehicles.mjs`** must pass: every `out/en/vehicles/<slug>.html` (except export sentinel) must be linked from `out/en/vehicles.html` (paths `/vehicles/{slug}` or `/en/vehicles/{slug}`).
 
 ### AD-6 — No secrets in client
 
@@ -76,7 +76,9 @@ No runtime origin server in Stage 1.
 
 - **Binds:** D-11, FR-64a, FR-64b
 - **Prevents:** Owner blocked when webhook fails
-- **Rule:** Sanity publish → webhook → CI/build hook; plus GitHub `workflow_dispatch` manual rebuild. Document in `docs/ops-deploy.md`.
+- **Rule:** Sanity publish → webhook Worker → GitHub `repository_dispatch` → **Rebuild site** (build + optional Pages deploy); plus `workflow_dispatch` manual rebuild. Document in `docs/ops-deploy.md`.
+
+**Canonical CI/CD (2026-11-24):** **CI** (`ci.yml`) runs on **pull requests** only (lint, typecheck, build, no deploy). **Rebuild site** (`rebuild.yml`) runs on **push to `main`**, manual dispatch, and `sanity-publish` — uploads `out/` and deploys when `CLOUDFLARE_DEPLOY_ENABLED=true`. **Cloudflare Pages** project `sga-headless` hosts the marketing static site (no Git connect if GitHub deploys). **Worker** `sga-sanity-rebuild` is webhook relay only — do not use a Git-connected Worker named `sga-headless` for the site.
 
 ### AD-8 — Enquiry is client-only
 

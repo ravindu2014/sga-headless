@@ -3,7 +3,7 @@ title: Sanity publish webhook triggers site rebuild
 type: feature
 ticket: '1'
 created: '2026-11-24'
-status: built
+status: done
 baseline_revision: ''
 route: oneshot
 route_source: pinned
@@ -52,6 +52,7 @@ context:
 
 - 2026-11-24: Worker relay + ops doc + dispatch script; `rebuild.yml` unchanged (already listens for `sanity-publish`).
 - Owner HITL: `wrangler secret put` ×2, `npm run deploy:webhook-relay`, Sanity webhook URL + test send.
+- 2026-11-24: f9609f0 — API at build, CI PR-only, canonical deploy doc; follow ingest `2026-11-24-webhook-rebuild-stale-cdn-cicd.md`.
 
 ## Verification
 

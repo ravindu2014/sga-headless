@@ -8,12 +8,12 @@ description = "Single build-time vehicle fetch; post-build verify that catalogue
 covers = ["R2", "R12"]
 risk = "medium"
 hitl = false
-verify = "npm run build succeeds; scripts/verify-static-vehicles.mjs passes; out/en/vehicles.html links to each out/en/vehicles/*.html slug."
+verify = "npm run build with SANITY_USE_CDN unset; verify-static-vehicles passes; both catalogue and detail routes include new slugs after Sanity publish + rebuild deploy."
 
 [[entry.acceptance]]
 criterion = "Build fails if a vehicle detail page exists under out/en/vehicles/ but out/en/vehicles.html does not link to that slug."
 covers = ["FR-62"]
 
 [[entry.acceptance]]
-criterion = "Catalogue and home featured use the same vehicle rows as generateStaticParams slug list (one fetchVehicleRows per worker)."
+criterion = "Catalogue and home featured use the same cached vehicle rows as generateStaticParams slug list (unstable_cache single snapshot per export)."
 covers = ["FR-61", "FR-10"]

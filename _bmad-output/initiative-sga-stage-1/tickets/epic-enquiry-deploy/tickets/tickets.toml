@@ -32,3 +32,21 @@ risk = "low"
 hitl = false
 verify = "docs/ops-deploy.md describes workflow_dispatch (FR-64b)."
 after = [1]
+
+[[entry]]
+id = 3
+type = "story"
+title = "Canonical CI/CD and Cloudflare surface area"
+description = "One build path: GitHub Rebuild deploys Pages; CI on PRs only; remove duplicate Worker Git build; document CLOUDFLARE_DEPLOY_ENABLED."
+covers = ["R10"]
+risk = "low"
+hitl = true
+verify = "docs/ops-deploy.md Canonical CI/CD table; ci.yml pull_request only; owner removed Git Worker sga-headless if present."
+
+[[entry.acceptance]]
+criterion = "Given push to main, when workflows run, then only rebuild.yml performs full release build (ci.yml does not run on main)."
+covers = ["FR-64b", "AD-7"]
+
+[[entry.acceptance]]
+criterion = "Given owner reads ops-deploy, when configuring Cloudflare, then production URL is Pages project sga-headless, not workers.dev Git Worker."
+covers = ["AD-7"]

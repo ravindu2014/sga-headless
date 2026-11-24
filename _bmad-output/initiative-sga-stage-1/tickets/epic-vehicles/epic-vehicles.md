@@ -28,6 +28,6 @@ UJ-1 and UJ-5 satisfied; SM-3 shareable URLs.
 
 - design — `ux-sga-stage-1/DESIGN.md` vehicle-card, catalogue-gap
 - architecture — AD-5 build consistency (catalogue/detail parity)
-- ingest — `sources/ingest/2026-11-24-prod-catalogue-detail-mismatch.md`
+- ingest — `sources/ingest/2026-11-24-prod-catalogue-detail-mismatch.md`, `sources/ingest/2026-11-24-webhook-rebuild-stale-cdn-cicd.md`
 - retrospective — `epic-vehicles/RETROSPECTIVE.md` (2026-11-24)
 - story — `epic-vehicles/tickets/tickets.toml` id 1 (parity AC)

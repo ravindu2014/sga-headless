@@ -31,3 +31,5 @@ SM-4, SM-9, dual deploy path D-11 documented and testable once once.
 - retrospective — `epic-enquiry-deploy/RETROSPECTIVE.md` (2026-11-24)
 - story — `epic-enquiry-deploy/tickets/tickets.toml` id 1 (Sanity webhook rebuild)
 - plan — `epic-enquiry-deploy/plan-sanity-webhook-rebuild.md`
+- ingest — `sources/ingest/2026-11-24-webhook-rebuild-stale-cdn-cicd.md`
+- story — `epic-enquiry-deploy/tickets/tickets.toml` id 3 (canonical CI/CD)
