@@ -17,7 +17,7 @@
     "studio:dev": "npm run dev --prefix studio",
     "studio:build": "npm run build --prefix studio",
     "deploy:pages": "npm run build && npm run pages:deploy",
-    "pages:deploy": "wrangler pages deploy out --project-name=sga-headless"
+    "pages:deploy": "node scripts/cf-pages-deploy.mjs"
   },
   "dependencies": {
     "@portabletext/react": "^8.0.1",
