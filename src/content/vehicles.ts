@@ -31,26 +31,7 @@ type VehicleDocument = {
   priceLkr?: number;
 };
 
-const VEHICLE_CARD_FIELDS = `{
-  "slug": slug.current,
-  title,
-  make,
-  model,
-  year,
-  transmission,
-  fuelType,
-  availability,
-  featured,
-  priceLkr,
-  mainImage {
-    alt,
-    asset->{url}
-  }
-}`;
-
-const VEHICLE_LIST_QUERY = `*[_type == "vehicle" && defined(slug.current)] | order(_updatedAt desc)${VEHICLE_CARD_FIELDS}`;
-
-const VEHICLE_DETAIL_QUERY = `*[_type == "vehicle" && slug.current == $slug][0]{
+const VEHICLE_FIELDS = `{
   "slug": slug.current,
   title,
   make,
@@ -74,6 +55,18 @@ const VEHICLE_DETAIL_QUERY = `*[_type == "vehicle" && slug.current == $slug][0]{
     asset->{url}
   }
 }`;
+
+const VEHICLE_LIST_QUERY = `*[_type == "vehicle" && defined(slug.current)] | order(_updatedAt desc)${VEHICLE_FIELDS}`;
+
+/** One Sanity request per build worker so catalogue, featured, detail, and slugs stay aligned. */
+let vehicleRowsPromise: Promise<VehicleDocument[] | null> | null = null;
+
+function fetchVehicleRows(): Promise<VehicleDocument[] | null> {
+  if (!vehicleRowsPromise) {
+    vehicleRowsPromise = sanityFetch<VehicleDocument[] | null>(VEHICLE_LIST_QUERY);
+  }
+  return vehicleRowsPromise;
+}
 
 function mapVehicleSummary(
   row: VehicleDocument,
@@ -137,7 +130,7 @@ function mapVehicleDetail(
 export async function getVehicles(
   locale: ContentLocale,
 ): Promise<VehicleSummaryDto[]> {
-  const rows = await sanityFetch<VehicleDocument[] | null>(VEHICLE_LIST_QUERY);
+  const rows = await fetchVehicleRows();
   if (!rows?.length) {
     return [];
   }
@@ -162,9 +155,8 @@ export async function getVehicleBySlug(
   locale: ContentLocale,
   slug: string,
 ): Promise<VehicleDetailDto | null> {
-  const doc = await sanityFetch<VehicleDocument | null>(VEHICLE_DETAIL_QUERY, {
-    slug,
-  });
+  const rows = await fetchVehicleRows();
+  const doc = rows?.find((row) => row.slug === slug);
   if (!doc) {
     return null;
   }
@@ -172,10 +164,12 @@ export async function getVehicleBySlug(
 }
 
 export async function getVehicleSlugs(): Promise<string[]> {
-  const slugs = await sanityFetch<{ slug: string }[] | null>(
-    `*[_type == "vehicle" && defined(slug.current)]{ "slug": slug.current }`,
+  const rows = await fetchVehicleRows();
+  return (
+    rows
+      ?.map((row) => row.slug)
+      .filter((slug): slug is string => Boolean(slug)) ?? []
   );
-  return slugs?.map((row) => row.slug).filter(Boolean) ?? [];
 }
 
 export type { VehicleSummaryDto, VehicleDetailDto };

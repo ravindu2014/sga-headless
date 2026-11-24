@@ -27,3 +27,7 @@ SM-4, SM-9, dual deploy path D-11 documented and testable once once.
 ## References
 
 - architecture — `architecture-sga-stage-1/architecture-sga-stage-1.md` AD-7, AD-8
+- operations — `docs/ops-deploy.md` (Sanity publish → rebuild; Cloudflare Workers Builds + Pages deploy; no extra PRD FR beyond FR-64a/b)
+- retrospective — `epic-enquiry-deploy/RETROSPECTIVE.md` (2026-11-24)
+- story — `epic-enquiry-deploy/tickets/tickets.toml` id 1 (Sanity webhook rebuild)
+- plan — `epic-enquiry-deploy/plan-sanity-webhook-rebuild.md`

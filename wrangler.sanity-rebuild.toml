@@ -1,0 +1,12 @@
+# Sanity → GitHub rebuild relay (FR-64a). Deploy: npm run deploy:webhook-relay
+name = "sga-sanity-rebuild"
+main = "workers/sanity-rebuild/src/index.ts"
+compatibility_date = "2024-11-01"
+
+# Set GITHUB_REPO to your org/repo; override with wrangler secret or dashboard var if needed.
+[vars]
+GITHUB_REPO = "ravindu2014/sga-headless"
+
+# Wrangler secrets (not in git):
+#   wrangler secret put SANITY_WEBHOOK_SECRET   -c wrangler.sanity-rebuild.toml
+#   wrangler secret put GITHUB_DISPATCH_TOKEN   -c wrangler.sanity-rebuild.toml

@@ -18,18 +18,50 @@ Content: **Sanity** `n2zalqm8` / `production`, read-only at build time.
 
 CI on push/PR still runs [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) (no artifact upload).
 
-### Sanity → GitHub auto-rebuild (webhook stub)
+### Sanity → GitHub auto-rebuild (webhook relay)
 
-Sanity cannot call GitHub Actions directly without a bridge. Stage 1 pattern:
+Sanity cannot call GitHub Actions without an authenticated bridge. This repo ships a **Cloudflare Worker** at [`workers/sanity-rebuild/`](../workers/sanity-rebuild/src/index.ts) that:
 
-1. **Sanity project** → **API** → **Webhooks** → create hook on **Create / Update / Delete** (published dataset).
-2. Target: a small relay you control, **or** GitHub **repository_dispatch** via a PAT—recommended shape:
-   - Payload URL: `https://api.github.com/repos/<owner>/<repo>/dispatches`
-   - HTTP headers: `Authorization: Bearer <GITHUB_PAT>` with `repo` scope (store in Sanity webhook secrets, not in repo).
-   - Body JSON: `{ "event_type": "sanity-publish", "client_payload": { "dataset": "production" } }`
-3. That fires [`.github/workflows/rebuild.yml`](../.github/workflows/rebuild.yml) on `repository_dispatch` type `sanity-publish`.
+1. Verifies `sanity-webhook-signature` with your webhook secret (`@sanity/webhook`).
+2. POSTs GitHub **`repository_dispatch`** with `event_type: sanity-publish`.
+3. Triggers [`.github/workflows/rebuild.yml`](../.github/workflows/rebuild.yml) (build + optional Cloudflare deploy).
 
-If webhook is not configured yet, use **manual rebuild** only; the site still builds correctly from main.
+#### One-time: deploy the relay
+
+```bash
+npm ci
+# Set vars in wrangler.sanity-rebuild.toml [vars] GITHUB_REPO if not ravindu2014/sga-headless
+wrangler secret put SANITY_WEBHOOK_SECRET -c wrangler.sanity-rebuild.toml
+wrangler secret put GITHUB_DISPATCH_TOKEN -c wrangler.sanity-rebuild.toml
+npm run deploy:webhook-relay
+```
+
+Note the Worker URL (e.g. `https://sga-sanity-rebuild.<account>.workers.dev`).
+
+| Secret | Purpose |
+|--------|---------|
+| `SANITY_WEBHOOK_SECRET` | Same string you configure in Sanity webhook **Secret** |
+| `GITHUB_DISPATCH_TOKEN` | Classic PAT (`repo`) or fine-grained token with **Actions: read and write** on this repository |
+
+#### One-time: Sanity webhook
+
+1. [sanity.io/manage](https://www.sanity.io/manage) → project **n2zalqm8** → **API** → **Webhooks** → **Create**.
+2. **URL:** `https://sga-sanity-rebuild.<your-subdomain>.workers.dev` (POST).
+3. **Dataset:** `production`.
+4. **Trigger on:** Create, Update, Delete (or narrower GROQ filter e.g. vehicle + site settings only).
+5. **Secret:** generate; copy into Wrangler `SANITY_WEBHOOK_SECRET` above.
+6. **HTTP method:** POST; **API version** default.
+
+Use **Send test request** in Sanity; in GitHub → **Actions** you should see **Rebuild site** with event `repository_dispatch` / `sanity-publish`.
+
+#### Test without Sanity
+
+```bash
+GITHUB_DISPATCH_TOKEN=… npm run dispatch:sanity-publish
+# or DRY_RUN=1 npm run dispatch:sanity-publish
+```
+
+If the relay is not deployed, use **manual rebuild** only; the site still builds correctly from `main`.
 
 ## Environment variables
 

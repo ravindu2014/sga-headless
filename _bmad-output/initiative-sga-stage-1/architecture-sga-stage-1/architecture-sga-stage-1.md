@@ -64,6 +64,8 @@ No runtime origin server in Stage 1.
 - **Prevents:** Client-side live catalogue fetch in production
 - **Rule:** Fetch published documents during build; vehicle slugs drive `generateStaticParams`.
 
+**Build consistency (2026-11-24):** For vehicles, use **one GROQ list fetch per build worker** (`fetchVehicleRows()` in `src/content/vehicles.ts`) so catalogue, featured strip, slug enumeration, and detail pages share the same CMS snapshot. In CI and Cloudflare builds, read Sanity via the **API** (`useCdn` off unless `SANITY_USE_CDN=true`) so publish → rebuild does not split “empty catalogue” HTML from live detail routes. After `next build`, **`scripts/verify-static-vehicles.mjs`** must pass: every `out/en/vehicles/<slug>.html` (except export sentinel) must appear as a link on `out/en/vehicles.html`.
+
 ### AD-6 — No secrets in client
 
 - **Binds:** RULE-5, FR-65

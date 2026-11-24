@@ -1,0 +1,19 @@
+# Stories — epic-vehicles (build order)
+
+[[entry]]
+id = 1
+type = "story"
+title = "Static build catalogue and detail parity"
+description = "Single build-time vehicle fetch; post-build verify that catalogue HTML includes all detail slugs."
+covers = ["R2", "R12"]
+risk = "medium"
+hitl = false
+verify = "npm run build succeeds; scripts/verify-static-vehicles.mjs passes; out/en/vehicles.html links to each out/en/vehicles/*.html slug."
+
+[[entry.acceptance]]
+criterion = "Build fails if a vehicle detail page exists under out/en/vehicles/ but out/en/vehicles.html does not link to that slug."
+covers = ["FR-62"]
+
+[[entry.acceptance]]
+criterion = "Catalogue and home featured use the same vehicle rows as generateStaticParams slug list (one fetchVehicleRows per worker)."
+covers = ["FR-61", "FR-10"]

@@ -10,14 +10,16 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/verify-static-vehicles.mjs",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "studio:dev": "npm run dev --prefix studio",
     "studio:build": "npm run build --prefix studio",
     "deploy:pages": "npm run build && npm run pages:deploy",
-    "pages:deploy": "node scripts/cf-pages-deploy.mjs"
+    "pages:deploy": "node scripts/cf-pages-deploy.mjs",
+    "deploy:webhook-relay": "wrangler deploy -c wrangler.sanity-rebuild.toml",
+    "dispatch:sanity-publish": "node scripts/github-repository-dispatch.mjs"
   },
   "dependencies": {
     "@portabletext/react": "^8.0.1",
@@ -30,6 +32,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
+    "@sanity/webhook": "^4.0.4",
     "@types/node": "^22.18.12",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",

@@ -1,0 +1,34 @@
+# Stories — epic-enquiry-deploy (build order)
+
+[[entry]]
+id = 1
+type = "story"
+title = "Sanity publish webhook triggers site rebuild"
+description = "Cloudflare Worker verifies Sanity webhook signature and calls GitHub repository_dispatch (sanity-publish); rebuild workflow builds and optionally deploys."
+covers = ["R10"]
+risk = "medium"
+hitl = true
+verify = "POST signed test payload to worker URL returns 202; GitHub Actions Rebuild site run with event repository_dispatch / sanity-publish succeeds."
+
+[[entry.acceptance]]
+criterion = "Given Sanity sends a signed webhook POST after publish, when the relay receives it, then GitHub repository_dispatch event_type sanity-publish is created and rebuild.yml runs."
+covers = ["FR-64a"]
+
+[[entry.acceptance]]
+criterion = "Given an invalid or missing sanity-webhook-signature, when POST hits the relay, then response is 401 and no GitHub dispatch occurs."
+covers = ["FR-64a", "FR-65"]
+
+[[entry.acceptance]]
+criterion = "Given worker and GitHub secrets are configured, when owner follows docs/ops-deploy.md, then Sanity dashboard webhook URL and secret are documented with no tokens in repo."
+covers = ["FR-64a", "AD-7", "AD-6"]
+
+[[entry]]
+id = 2
+type = "story"
+title = "Document manual rebuild fallback"
+description = "workflow_dispatch path and checklist remain in ops-deploy when webhook or relay is down."
+covers = ["R10"]
+risk = "low"
+hitl = false
+verify = "docs/ops-deploy.md describes workflow_dispatch (FR-64b)."
+after = [1]
