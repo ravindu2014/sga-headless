@@ -63,7 +63,7 @@ export default async function HomePage({ params }: Props) {
         <div className="mx-auto max-w-content px-page-gutter-mobile py-section-y md:px-page-gutter-desktop">
           <h2 className="text-headline text-primary">{t("featuredTitle")}</h2>
           {featured.length ? (
-            <div className="mt-6 grid gap-catalogue-gap bg-background sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-4 grid gap-catalogue-gap bg-background sm:grid-cols-2 lg:grid-cols-4">
               {featured.map((vehicle) => (
                 <VehicleCard
                   key={vehicle.slug}

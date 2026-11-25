@@ -43,14 +43,14 @@ export function VehicleSummaryCard({
   return (
     <article className="flex h-full flex-col rounded-container border border-border bg-surface">
       <Link href={href} className="block">
-        <div className="relative aspect-[4/3] overflow-hidden border-b border-border bg-surface">
+        <div className="relative aspect-[16/10] overflow-hidden border-b border-border bg-surface">
           {vehicle.mainImage?.url ? (
             <Image
               src={vehicle.mainImage.url}
               alt={vehicle.mainImage.alt ?? vehicle.title.value}
               fill
               className="object-cover"
-              sizes="(max-width: 768px) 100vw, 33vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             />
           ) : (
             <div className="flex h-full items-center justify-center px-4 text-center text-body-sm text-on-surface-muted">
@@ -76,7 +76,7 @@ export function VehicleSummaryCard({
             {labels[vehicle.availability]}
           </span>
         </div>
-        <Heading className="text-title text-on-surface">
+        <Heading className="text-body font-semibold leading-snug text-on-surface">
           <Link href={href} className="hover:text-primary">
             {vehicle.title.value}
           </Link>
@@ -84,36 +84,19 @@ export function VehicleSummaryCard({
         <p className="mt-1 text-body-sm text-on-surface-muted">
           {vehicle.make} · {vehicle.model}
         </p>
-        <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-body-sm">
-          <div>
-            <dt className="text-label text-on-surface-muted">{labels.factYear}</dt>
-            <dd className="font-medium text-on-surface">{vehicle.year}</dd>
-          </div>
-          {vehicle.mileage != null ? (
-            <div>
-              <dt className="text-label text-on-surface-muted">
-                {labels.factMileage}
-              </dt>
-              <dd className="font-medium text-on-surface">
-                {formatKm(vehicle.mileage, locale)}
-              </dd>
-            </div>
-          ) : null}
-          {vehicle.transmission ? (
-            <div>
-              <dt className="text-label text-on-surface-muted">
-                {labels.factTransmission}
-              </dt>
-              <dd className="font-medium text-on-surface">
-                {vehicle.transmission}
-              </dd>
-            </div>
-          ) : null}
-        </dl>
-        <p className="mt-3 text-price text-on-surface">{priceLabel}</p>
+        <p className="mt-2 text-body-sm text-on-surface">
+          {[
+            String(vehicle.year),
+            vehicle.mileage != null ? formatKm(vehicle.mileage, locale) : null,
+            vehicle.transmission,
+          ]
+            .filter(Boolean)
+            .join(" · ")}
+        </p>
+        <p className="mt-2 text-price text-on-surface">{priceLabel}</p>
         <Link
           href={href}
-          className="mt-4 inline-flex min-h-tap items-center justify-center rounded-md bg-accent px-3 text-body font-semibold text-on-accent hover:bg-accent-hover"
+          className="mt-3 inline-flex min-h-tap items-center justify-center rounded-md bg-accent px-3 text-body font-semibold text-on-accent hover:bg-accent-hover"
         >
           {labels.viewDetails}
         </Link>

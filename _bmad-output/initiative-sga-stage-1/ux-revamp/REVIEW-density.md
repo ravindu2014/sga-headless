@@ -1,5 +1,5 @@
 ---
-status: epic-1-density-implemented
+status: epic-1-and-2-density-implemented
 date: 2026-11-25
 constraint: no application code until an epic is approved
 benchmark: https://collectingcars.com/

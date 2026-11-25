@@ -85,16 +85,16 @@ export function VehicleCatalog({ vehicles, locale, labels }: Props) {
   return (
     <div>
       <div
-        className="mt-6 flex flex-wrap items-end gap-3"
+        className="mt-4 flex flex-col gap-3 lg:flex-row lg:flex-nowrap lg:items-end"
         role="group"
         aria-label={labels.filterMake}
       >
-        <label className="flex min-w-40 flex-col gap-1 text-body-sm">
+        <label className="flex min-w-0 flex-1 flex-col gap-1 text-body-sm">
           <span className="text-label text-on-surface-muted">
             {labels.filterMake}
           </span>
           <select
-            className={selectClass}
+            className={`${selectClass} w-full`}
             value={make}
             onChange={(e) => {
               setMake(e.target.value);
@@ -109,12 +109,12 @@ export function VehicleCatalog({ vehicles, locale, labels }: Props) {
             ))}
           </select>
         </label>
-        <label className="flex min-w-40 flex-col gap-1 text-body-sm">
+        <label className="flex min-w-0 flex-1 flex-col gap-1 text-body-sm">
           <span className="text-label text-on-surface-muted">
             {labels.filterModel}
           </span>
           <select
-            className={selectClass}
+            className={`${selectClass} w-full`}
             value={model}
             onChange={(e) => setModel(e.target.value)}
           >
@@ -126,12 +126,12 @@ export function VehicleCatalog({ vehicles, locale, labels }: Props) {
             ))}
           </select>
         </label>
-        <label className="flex min-w-32 flex-col gap-1 text-body-sm">
+        <label className="flex min-w-0 flex-1 flex-col gap-1 text-body-sm">
           <span className="text-label text-on-surface-muted">
             {labels.filterYear}
           </span>
           <select
-            className={selectClass}
+            className={`${selectClass} w-full`}
             value={year}
             onChange={(e) => setYear(e.target.value)}
           >
@@ -143,12 +143,12 @@ export function VehicleCatalog({ vehicles, locale, labels }: Props) {
             ))}
           </select>
         </label>
-        <label className="flex min-w-52 flex-col gap-1 text-body-sm">
+        <label className="flex min-w-0 flex-[1.4] flex-col gap-1 text-body-sm">
           <span className="text-label text-on-surface-muted">
             {labels.filterBudget}
           </span>
           <select
-            className={selectClass}
+            className={`${selectClass} w-full`}
             value={budget}
             onChange={(e) => setBudget(e.target.value as Budget)}
           >
@@ -161,7 +161,7 @@ export function VehicleCatalog({ vehicles, locale, labels }: Props) {
         </label>
         <button
           type="button"
-          className="min-h-tap rounded-md border border-border-strong px-3 text-body-sm font-semibold text-primary"
+          className="min-h-tap shrink-0 rounded-md border border-border-strong px-3 text-body-sm font-semibold text-primary"
           onClick={reset}
         >
           {labels.clearFilters}
@@ -173,7 +173,7 @@ export function VehicleCatalog({ vehicles, locale, labels }: Props) {
           <p className="text-body text-on-surface-muted">{labels.filterEmpty}</p>
         </div>
       ) : (
-        <div className="mt-8 grid items-stretch gap-catalogue-gap bg-background sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid items-stretch gap-catalogue-gap bg-background sm:grid-cols-2 lg:grid-cols-4">
           {filtered.map((vehicle) => (
             <VehicleSummaryCard
               key={vehicle.slug}
