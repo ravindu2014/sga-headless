@@ -86,7 +86,7 @@ export default async function VehicleDetailPage({ params }: Props) {
   ].filter((row) => row.value.trim().length > 0);
 
   return (
-    <main className="mx-auto max-w-content px-page-gutter-mobile py-section-y md:px-page-gutter-desktop">
+    <main className="mx-auto max-w-content px-page-gutter-mobile py-4 md:px-page-gutter-desktop">
       <div className="flex flex-wrap items-center gap-2">
         <AvailabilityBadge availability={vehicle.availability} />
         {vehicle.featured ? (
@@ -95,37 +95,41 @@ export default async function VehicleDetailPage({ params }: Props) {
           </span>
         ) : null}
       </div>
-      <h1 className="mt-3 text-display-mobile text-primary md:text-display">
-        {vehicle.title.value}
-      </h1>
-      <p className="mt-2 text-body-sm text-on-surface-muted">
+      <h1 className="mt-2 text-headline text-primary">{vehicle.title.value}</h1>
+      <p className="mt-1 text-body-sm text-on-surface-muted">
         {vehicle.year} · {vehicle.make} · {vehicle.model}
       </p>
 
-      <div className="mt-8 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
-        <div className="space-y-8">
-          <div className="space-y-4">
+      <div className="mt-4 grid gap-4 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
+        <div className="space-y-4">
+          <div className="space-y-2">
             {vehicle.mainImage?.url ? (
-              <Image
-                src={vehicle.mainImage.url}
-                alt={vehicle.mainImage.alt ?? vehicle.title.value}
-                width={1400}
-                height={1050}
-                className="w-full rounded-container border border-border object-cover"
-                priority
-              />
+              <div className="relative aspect-[16/10] overflow-hidden rounded-container border border-border">
+                <Image
+                  src={vehicle.mainImage.url}
+                  alt={vehicle.mainImage.alt ?? vehicle.title.value}
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                />
+              </div>
             ) : null}
             {vehicle.gallery.length > 0 ? (
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+              <div className="grid grid-cols-3 gap-2">
                 {vehicle.gallery.map((img, index) => (
-                  <Image
+                  <div
                     key={index}
-                    src={img.url}
-                    alt={img.alt ?? `${vehicle.title.value} ${index + 1}`}
-                    width={480}
-                    height={360}
-                    className="aspect-[4/3] w-full rounded-container border border-border object-cover"
-                  />
+                    className="relative aspect-[16/10] overflow-hidden rounded-container border border-border"
+                  >
+                    <Image
+                      src={img.url}
+                      alt={img.alt ?? `${vehicle.title.value} ${index + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="20vw"
+                    />
+                  </div>
                 ))}
               </div>
             ) : null}
@@ -140,14 +144,14 @@ export default async function VehicleDetailPage({ params }: Props) {
             <h2 id="vehicle-specs" className="text-title text-primary">
               {detail("specsTitle")}
             </h2>
-            <dl className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <dl className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
               {specRows.map((row) => (
                 <div
                   key={row.label}
-                  className="rounded-container border border-border px-3 py-2"
+                  className="rounded-container border border-border px-3 py-1.5"
                 >
                   <dt className="text-label text-on-surface-muted">{row.label}</dt>
-                  <dd className="mt-1 font-medium text-on-surface">{row.value}</dd>
+                  <dd className="font-medium text-on-surface">{row.value}</dd>
                 </div>
               ))}
             </dl>

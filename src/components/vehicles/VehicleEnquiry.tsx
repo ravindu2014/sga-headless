@@ -50,7 +50,7 @@ export function VehicleEnquiry({ whatsapp, vehicleTitle, pageUrl }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 space-y-4" noValidate>
+    <form onSubmit={handleSubmit} className="mt-3 space-y-3" noValidate>
       <p className="text-body-sm text-on-surface-muted">{t("handoffHint")}</p>
       <div>
         <label htmlFor="enquiry-name" className="text-label text-on-surface">
@@ -82,7 +82,7 @@ export function VehicleEnquiry({ whatsapp, vehicleTitle, pageUrl }: Props) {
         <textarea
           id="enquiry-message"
           name="message"
-          rows={3}
+          rows={2}
           maxLength={MAX_MESSAGE_LENGTH}
           className="field-control mt-1 py-2"
           value={message}
