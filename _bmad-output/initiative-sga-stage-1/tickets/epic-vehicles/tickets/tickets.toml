@@ -17,3 +17,26 @@ covers = ["FR-62"]
 [[entry.acceptance]]
 criterion = "Catalogue and home featured use the same cached vehicle rows as generateStaticParams slug list (unstable_cache single snapshot per export)."
 covers = ["FR-61", "FR-10"]
+
+[[entry]]
+id = 2
+type = "story"
+title = "Vehicle detail shows the photo beside the title, price, and enquiry"
+description = "Move existing detail blocks to the Collecting Cars column positions. Do not change their sizes."
+covers = ["R2"]
+risk = "medium"
+hitl = false
+after = []
+verify = "At 1440×900 the photo is left and the title, price, specifications, and enquiry are right, level with the photo. At 390×844 the photo is first. Sizes are unchanged."
+
+[[entry.acceptance]]
+criterion = "Desktop: left column is photo, gallery, description, features. Right column is badges, title, year · make · model, price, specifications, enquiry, starting level with the photo."
+covers = ["R2"]
+
+[[entry.acceptance]]
+criterion = "Phone: photo and gallery, then the right-column stack, then description and features."
+covers = ["R2"]
+
+[[entry.acceptance]]
+criterion = "Photo ratio, title size, specification cell padding, price size, and enquiry control sizes stay as they are. Empty specs stay omitted. The enquiry still says nothing is saved."
+covers = ["R2"]
