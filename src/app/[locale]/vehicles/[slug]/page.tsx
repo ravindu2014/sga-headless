@@ -71,23 +71,19 @@ export default async function VehicleDetailPage({ params }: Props) {
     `vehicles/${vehicle.slug}`,
   );
 
-  const specRows: { label: string; value: string }[] = [
+  const mileageLabel =
+    vehicle.mileage != null
+      ? `${vehicle.mileage.toLocaleString(contentLocale === "si" ? "si-LK" : "en-LK")} km`
+      : "";
+  const specRows = [
     { label: detail("year"), value: String(vehicle.year) },
     { label: detail("make"), value: vehicle.make },
     { label: detail("model"), value: vehicle.model },
-    ...(vehicle.mileage != null
-      ? [{ label: detail("mileage"), value: `${vehicle.mileage.toLocaleString()} km` }]
-      : []),
-    ...(vehicle.transmission
-      ? [{ label: detail("transmission"), value: vehicle.transmission }]
-      : []),
-    ...(vehicle.fuelType
-      ? [{ label: detail("fuel"), value: vehicle.fuelType }]
-      : []),
-    ...(vehicle.exteriorColour
-      ? [{ label: detail("colour"), value: vehicle.exteriorColour }]
-      : []),
-  ];
+    { label: detail("mileage"), value: mileageLabel },
+    { label: detail("transmission"), value: vehicle.transmission ?? "" },
+    { label: detail("fuel"), value: vehicle.fuelType ?? "" },
+    { label: detail("colour"), value: vehicle.exteriorColour ?? "" },
+  ].filter((row) => row.value.trim().length > 0);
 
   return (
     <main className="mx-auto max-w-content px-page-gutter-mobile py-section-y md:px-page-gutter-desktop">
@@ -107,56 +103,65 @@ export default async function VehicleDetailPage({ params }: Props) {
       </p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
-        <div className="space-y-4">
-          {vehicle.mainImage?.url ? (
-            <Image
-              src={vehicle.mainImage.url}
-              alt={vehicle.mainImage.alt ?? vehicle.title.value}
-              width={1400}
-              height={1050}
-              className="w-full rounded-container border border-border object-cover"
-              priority
-            />
-          ) : null}
-          {vehicle.gallery.length > 0 ? (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-              {vehicle.gallery.map((img, index) => (
-                <Image
-                  key={index}
-                  src={img.url}
-                  alt={img.alt ?? `${vehicle.title.value} ${index + 1}`}
-                  width={480}
-                  height={360}
-                  className="aspect-[4/3] w-full rounded-container border border-border object-cover"
-                />
-              ))}
-            </div>
-          ) : null}
-        </div>
-        <aside className="rounded-container border border-border p-card-padding lg:sticky lg:top-6">
-          <p className="text-price text-on-surface">{priceLabel}</p>
+        <div className="space-y-8">
+          <div className="space-y-4">
+            {vehicle.mainImage?.url ? (
+              <Image
+                src={vehicle.mainImage.url}
+                alt={vehicle.mainImage.alt ?? vehicle.title.value}
+                width={1400}
+                height={1050}
+                className="w-full rounded-container border border-border object-cover"
+                priority
+              />
+            ) : null}
+            {vehicle.gallery.length > 0 ? (
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+                {vehicle.gallery.map((img, index) => (
+                  <Image
+                    key={index}
+                    src={img.url}
+                    alt={img.alt ?? `${vehicle.title.value} ${index + 1}`}
+                    width={480}
+                    height={360}
+                    className="aspect-[4/3] w-full rounded-container border border-border object-cover"
+                  />
+                ))}
+              </div>
+            ) : null}
+          </div>
           {vehicle.description ? (
             <LocaleText
               value={vehicle.description}
-              className="mt-4 text-body text-on-surface"
+              className="text-body text-on-surface"
             />
           ) : null}
-          <h2 className="mt-6 text-title text-primary">{detail("specsTitle")}</h2>
-          <dl className="mt-3 space-y-2 text-body-sm">
-            {specRows.map((row) => (
-              <div key={row.label} className="flex justify-between gap-4 border-b border-border pb-2">
-                <dt className="text-on-surface-muted">{row.label}</dt>
-                <dd className="font-medium text-on-surface">{row.value}</dd>
-              </div>
-            ))}
-          </dl>
+          <section aria-labelledby="vehicle-specs">
+            <h2 id="vehicle-specs" className="text-title text-primary">
+              {detail("specsTitle")}
+            </h2>
+            <dl className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {specRows.map((row) => (
+                <div
+                  key={row.label}
+                  className="rounded-container border border-border px-3 py-2"
+                >
+                  <dt className="text-label text-on-surface-muted">{row.label}</dt>
+                  <dd className="mt-1 font-medium text-on-surface">{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
           {vehicle.features ? (
             <LocaleText
               value={vehicle.features}
               as="div"
-              className="mt-4 whitespace-pre-wrap text-body-sm text-on-surface-muted"
+              className="whitespace-pre-wrap text-body-sm text-on-surface-muted"
             />
           ) : null}
+        </div>
+        <aside className="h-fit rounded-container border border-border p-card-padding lg:sticky lg:top-32">
+          <p className="text-price text-on-surface">{priceLabel}</p>
           {settings ? (
             <VehicleEnquiry
               whatsapp={settings.whatsapp}
