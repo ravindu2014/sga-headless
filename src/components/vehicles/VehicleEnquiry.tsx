@@ -50,7 +50,7 @@ export function VehicleEnquiry({ whatsapp, vehicleTitle, pageUrl }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-3 space-y-3" noValidate>
+    <form onSubmit={handleSubmit} className="space-y-3" noValidate>
       <p className="text-body-sm text-on-surface-muted">{t("handoffHint")}</p>
       <div>
         <label htmlFor="enquiry-name" className="text-label text-on-surface">
