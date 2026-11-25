@@ -147,7 +147,9 @@ export default async function VehicleDetailPage({ params }: Props) {
                 ) : null}
               </div>
             ) : null}
-            {hasStory ? <div className="hidden lg:block">{renderStory()}</div> : null}
+            {hasStory ? (
+              <div className="hidden border-t border-border pt-4 lg:block">{renderStory()}</div>
+            ) : null}
           </div>
         ) : null}
 
@@ -170,7 +172,13 @@ export default async function VehicleDetailPage({ params }: Props) {
           <p className="mt-1 text-body-sm text-on-surface-muted">
             {vehicle.year} · {vehicle.make} · {vehicle.model}
           </p>
-          <p className="mt-4 text-price text-on-surface">{priceLabel}</p>
+          {vehicle.priceLkr != null ? (
+            <p className="mt-4 text-price text-on-surface">{priceLabel}</p>
+          ) : (
+            <p className="mt-4 inline-flex w-fit rounded-md border border-border px-2 py-0.5 text-body-sm font-medium text-price-muted">
+              {priceLabel}
+            </p>
+          )}
           {specRows.length > 0 ? (
             <section aria-labelledby="vehicle-specs" className="mt-4">
               <h2 id="vehicle-specs" className="text-title text-primary">
@@ -180,10 +188,10 @@ export default async function VehicleDetailPage({ params }: Props) {
                 {specRows.map((row) => (
                   <div
                     key={row.label}
-                    className="rounded-container border border-border px-3 py-1.5"
+                    className="rounded-container border border-border px-2.5 py-1"
                   >
                     <dt className="text-label text-on-surface-muted">{row.label}</dt>
-                    <dd className="font-medium text-on-surface">{row.value}</dd>
+                    <dd className="text-body-sm font-medium text-on-surface">{row.value}</dd>
                   </div>
                 ))}
               </dl>
@@ -200,7 +208,9 @@ export default async function VehicleDetailPage({ params }: Props) {
           ) : null}
         </div>
 
-        {hasStory ? <div className="mt-4 lg:hidden">{renderStory()}</div> : null}
+        {hasStory ? (
+          <div className="mt-4 border-t border-border pt-4 lg:hidden">{renderStory()}</div>
+        ) : null}
       </div>
     </main>
   );

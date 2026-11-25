@@ -40,3 +40,45 @@ covers = ["R2"]
 [[entry.acceptance]]
 criterion = "Photo ratio, title size, specification cell padding, price size, and enquiry control sizes stay as they are. Empty specs stay omitted. The enquiry still says nothing is saved."
 covers = ["R2"]
+
+[[entry]]
+id = 3
+type = "story"
+title = "Action labels are slightly smaller and price on request is outlined"
+description = "Drop call-to-action labels by 2px. Outline “Price on request” on the card. Leave a rupee price at the current price size."
+covers = ["R2", "R12"]
+risk = "low"
+hitl = false
+after = []
+verify = "At 1440 and 390 the action label is 14px inside a 44px button, and “Price on request” is a 14px outlined chip."
+
+[[entry.acceptance]]
+criterion = "Crimson and outlined action labels are 14px and semibold. The button stays 44px tall."
+covers = ["R12"]
+
+[[entry.acceptance]]
+criterion = "“Price on request” on a card is a 14px outlined chip. A rupee price stays the current price size."
+covers = ["R2"]
+
+[[entry]]
+id = 4
+type = "story"
+title = "Detail price on request matches the card and specifications sit tighter"
+description = "Use the card’s price-on-request chip on the detail page, shrink the specification boxes with their type, and rule off the description with a thin line."
+covers = ["R2", "R12"]
+risk = "low"
+hitl = false
+after = []
+verify = "At 1440 and 390 the detail chip matches the card, specification values are 14px in a shorter cell, and a description has a 1px line above it."
+
+[[entry.acceptance]]
+criterion = "Detail “Price on request” matches the card chip. A rupee price stays the current price size."
+covers = ["R2"]
+
+[[entry.acceptance]]
+criterion = "Specification values are 14px. Cell padding is 10px by 4px. The label, border, and desktop two-column grid stay."
+covers = ["R12"]
+
+[[entry.acceptance]]
+criterion = "A description or features list has a 1px standard line above it, with 16px of space on each side. A vehicle with neither has no line."
+covers = ["R2"]

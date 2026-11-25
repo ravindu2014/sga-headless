@@ -91,7 +91,7 @@ export function VehicleEnquiry({ whatsapp, vehicleTitle, pageUrl }: Props) {
       </div>
       <button
         type="submit"
-        className="inline-flex min-h-tap w-full items-center justify-center rounded-md bg-accent px-3 font-semibold text-body text-on-accent hover:bg-accent-hover"
+        className="inline-flex min-h-tap w-full items-center justify-center rounded-md bg-accent px-3 font-semibold text-body-sm text-on-accent hover:bg-accent-hover"
       >
         {t("submit")}
       </button>

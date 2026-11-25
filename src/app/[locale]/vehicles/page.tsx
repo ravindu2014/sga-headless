@@ -76,7 +76,7 @@ export default async function VehiclesPage({ params }: Props) {
           <p className="mt-2 text-body text-on-surface-muted">{t("emptyBody")}</p>
           <Link
             href="/contact"
-            className="mt-4 inline-flex min-h-tap items-center justify-center rounded-md bg-accent px-3 font-semibold text-body text-on-accent"
+            className="mt-4 inline-flex min-h-tap items-center justify-center rounded-md bg-accent px-3 font-semibold text-body-sm text-on-accent"
           >
             {cta("contactUs")}
           </Link>

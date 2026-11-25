@@ -93,10 +93,16 @@ export function VehicleSummaryCard({
             .filter(Boolean)
             .join(" · ")}
         </p>
-        <p className="mt-2 text-price text-on-surface">{priceLabel}</p>
+        {vehicle.priceLkr != null ? (
+          <p className="mt-2 text-price text-on-surface">{priceLabel}</p>
+        ) : (
+          <p className="mt-2 inline-flex w-fit rounded-md border border-border px-2 py-0.5 text-body-sm font-medium text-price-muted">
+            {priceLabel}
+          </p>
+        )}
         <Link
           href={href}
-          className="mt-3 inline-flex min-h-tap items-center justify-center rounded-md bg-accent px-3 text-body font-semibold text-on-accent hover:bg-accent-hover"
+          className="mt-3 inline-flex min-h-tap items-center justify-center rounded-md bg-accent px-3 text-body-sm font-semibold text-on-accent hover:bg-accent-hover"
         >
           {labels.viewDetails}
         </Link>
