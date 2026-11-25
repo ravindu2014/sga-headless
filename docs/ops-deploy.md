@@ -3,6 +3,8 @@
 Static site: **Next.js `output: export`** → `out/` → **Cloudflare Pages** (when connected).  
 Content: **Sanity** `n2zalqm8` / `production`, read-only at build time.
 
+BMAD process for deploy changes: [`bmad-way-of-working.md`](bmad-way-of-working.md).
+
 ## Canonical CI/CD (one build per event)
 
 | Layer | Keep? | Role |

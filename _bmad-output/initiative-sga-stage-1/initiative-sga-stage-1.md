@@ -68,10 +68,12 @@ Prospective buyers can browse stock and contact the business online; the owner u
 
 ## References
 
+- **way of working** — [`docs/bmad-way-of-working.md`](../../docs/bmad-way-of-working.md) (BMAD loop, skills, `uv`, hygiene)
 - prd — `_bmad-output/initiative-sga-stage-1/prd-sga-stage-1/prd-sga-stage-1.md`
 - design — `_bmad-output/initiative-sga-stage-1/ux-sga-stage-1/DESIGN.md`
 - experience — `_bmad-output/initiative-sga-stage-1/ux-sga-stage-1/EXPERIENCE.md`
 - architecture — `_bmad-output/initiative-sga-stage-1/architecture-sga-stage-1/architecture-sga-stage-1.md`
+- operations — [`docs/ops-deploy.md`](../../docs/ops-deploy.md) (AD-7 deploy; pair with BMAD epic 5)
 
 ## Notes
 
