@@ -3,15 +3,8 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
-
-const NAV_ITEMS = [
-  { href: "/", key: "home" },
-  { href: "/vehicles", key: "vehicles" },
-  { href: "/services", key: "services" },
-  { href: "/about", key: "about" },
-  { href: "/faq", key: "faq" },
-  { href: "/contact", key: "contact" },
-] as const;
+import { NavIcon } from "./NavIcon";
+import { isNavActive, NAV_ITEMS } from "./nav-items";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -32,25 +25,26 @@ export function MobileNav() {
       {open ? (
         <nav
           id="mobile-nav-panel"
-          className="absolute left-0 right-0 top-16 z-40 border-b border-border bg-surface px-page-gutter-mobile py-4"
+          className="absolute left-0 right-0 top-16 z-40 border-b border-primary bg-surface px-page-gutter-mobile py-3"
           aria-label={t("primary")}
         >
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-1">
             {NAV_ITEMS.map((item) => {
-              const active =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(item.href);
+              const active = isNavActive(pathname, item.href);
               return (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className={`block min-h-tap py-2 text-body font-medium ${
-                      active ? "text-primary" : "text-on-surface"
-                    }`}
+                    aria-current={active ? "page" : undefined}
+                    className={
+                      active
+                        ? "flex min-h-tap items-center gap-3 border-l-4 border-primary bg-primary/5 px-3 text-body font-semibold text-primary"
+                        : "flex min-h-tap items-center gap-3 border-l-4 border-transparent px-3 text-body font-medium text-on-surface"
+                    }
                     onClick={() => setOpen(false)}
                   >
-                    {t(item.key)}
+                    <NavIcon name={item.key} />
+                    <span>{t(item.key)}</span>
                   </Link>
                 </li>
               );
