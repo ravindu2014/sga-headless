@@ -32,7 +32,7 @@ export default async function ServicesPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const page = await getServicesPage(locale as Locale);
-  const t = await getTranslations("nav");
+  const t = await getTranslations({ locale, namespace: "nav" });
 
   if (!page) {
     return (

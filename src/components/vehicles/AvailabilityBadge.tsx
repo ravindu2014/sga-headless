@@ -1,12 +1,14 @@
 import { getTranslations } from "next-intl/server";
 import type { VehicleAvailability } from "@/content";
+import type { Locale } from "@/i18n/routing";
 
 type Props = {
   availability: VehicleAvailability;
+  locale: Locale;
 };
 
-export async function AvailabilityBadge({ availability }: Props) {
-  const t = await getTranslations("vehicles");
+export async function AvailabilityBadge({ availability, locale }: Props) {
+  const t = await getTranslations({ locale, namespace: "vehicles" });
 
   if (availability === "available") {
     return (

@@ -1,7 +1,8 @@
 import { getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 
-export async function SkipLink() {
-  const t = await getTranslations();
+export async function SkipLink({ locale }: { locale: Locale }) {
+  const t = await getTranslations({ locale });
   return (
     <a
       href="#main-content"

@@ -32,7 +32,7 @@ export default async function FaqPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const page = await getFaqPage(locale as Locale);
-  const t = await getTranslations("faq");
+  const t = await getTranslations({ locale, namespace: "faq" });
 
   if (!page) {
     return (

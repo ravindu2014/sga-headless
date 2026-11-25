@@ -36,8 +36,8 @@ export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const contentLocale = locale as Locale;
-  const t = await getTranslations("home");
-  const cta = await getTranslations("cta");
+  const t = await getTranslations({ locale, namespace: "home" });
+  const cta = await getTranslations({ locale, namespace: "cta" });
 
   const cms = await getHomePage(contentLocale);
   const featured = await getFeaturedVehicles(contentLocale);

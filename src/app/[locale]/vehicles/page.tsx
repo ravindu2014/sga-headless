@@ -35,8 +35,8 @@ export default async function VehiclesPage({ params }: Props) {
   setRequestLocale(locale);
   const contentLocale = locale as Locale;
   const vehicles = await getVehicles(contentLocale);
-  const t = await getTranslations("vehicles");
-  const cta = await getTranslations("cta");
+  const t = await getTranslations({ locale, namespace: "vehicles" });
+  const cta = await getTranslations({ locale, namespace: "cta" });
 
   const labels: VehicleCatalogLabels = {
     priceOnRequest: t("priceOnRequest"),

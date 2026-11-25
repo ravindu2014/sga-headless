@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { SiteSettingsDto } from "@/content";
+import type { Locale } from "@/i18n/routing";
 
 const NAV_ITEMS = [
   { href: "/", key: "home" },
@@ -12,12 +13,13 @@ const NAV_ITEMS = [
 ] as const;
 
 type Props = {
+  locale: Locale;
   settings: SiteSettingsDto | null;
 };
 
-export async function SiteFooter({ settings }: Props) {
-  const nav = await getTranslations("nav");
-  const footer = await getTranslations("footer");
+export async function SiteFooter({ locale, settings }: Props) {
+  const nav = await getTranslations({ locale, namespace: "nav" });
+  const footer = await getTranslations({ locale, namespace: "footer" });
 
   return (
     <footer className="mt-auto border-t border-border bg-surface">

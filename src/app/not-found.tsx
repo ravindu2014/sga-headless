@@ -8,17 +8,18 @@ import { routing } from "@/i18n/routing";
 import { fontVariables } from "./fonts";
 
 export default async function NotFound() {
-  setRequestLocale(routing.defaultLocale);
+  const locale = routing.defaultLocale;
+  setRequestLocale(locale);
   const [messages, settings] = await Promise.all([
-    getMessages(),
-    getSiteSettings(routing.defaultLocale),
+    getMessages({ locale }),
+    getSiteSettings(locale),
   ]);
 
   return (
-    <html lang={routing.defaultLocale}>
+    <html lang={locale}>
       <body className={`${fontVariables} min-h-screen`}>
-        <NextIntlClientProvider messages={messages}>
-          <SiteShell settings={settings}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <SiteShell locale={locale} settings={settings}>
             <NotFoundContent />
           </SiteShell>
         </NextIntlClientProvider>

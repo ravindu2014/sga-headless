@@ -55,16 +55,17 @@ export default async function LocaleLayout({ children, params }: Props) {
   }
 
   setRequestLocale(locale);
-  const messages = await getMessages();
-  const settings = await getSiteSettings(locale as Locale);
+  const contentLocale = locale as Locale;
+  const messages = await getMessages({ locale });
+  const settings = await getSiteSettings(contentLocale);
 
   return (
     <html lang={locale}>
       <body
         className={`${fontVariables} min-h-screen`}
       >
-        <NextIntlClientProvider messages={messages}>
-          <SiteShell settings={settings}>{children}</SiteShell>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <SiteShell locale={contentLocale} settings={settings}>{children}</SiteShell>
         </NextIntlClientProvider>
       </body>
     </html>

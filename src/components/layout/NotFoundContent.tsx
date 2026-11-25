@@ -1,9 +1,11 @@
-import { getTranslations } from "next-intl/server";
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
-export async function NotFoundContent() {
-  const t = await getTranslations("notFound");
-  const cta = await getTranslations("cta");
+export function NotFoundContent() {
+  const t = useTranslations("notFound");
+  const cta = useTranslations("cta");
 
   return (
     <main className="mx-auto max-w-content px-page-gutter-mobile py-4 md:px-page-gutter-desktop min-[1264px]:px-page-gutter-wide">

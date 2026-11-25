@@ -9,7 +9,7 @@ type Props = {
 };
 
 export async function VehicleCard({ vehicle, locale }: Props) {
-  const t = await getTranslations("vehicles");
+  const t = await getTranslations({ locale, namespace: "vehicles" });
 
   return (
     <VehicleSummaryCard

@@ -37,7 +37,7 @@ export default async function ContactPage({ params }: Props) {
     getContactPage(contentLocale),
     getSiteSettings(contentLocale),
   ]);
-  const t = await getTranslations("contact");
+  const t = await getTranslations({ locale, namespace: "contact" });
 
   return (
     <main>

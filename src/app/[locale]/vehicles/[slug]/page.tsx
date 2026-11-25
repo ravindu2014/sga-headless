@@ -58,8 +58,8 @@ export default async function VehicleDetailPage({ params }: Props) {
     notFound();
   }
 
-  const t = await getTranslations("vehicles");
-  const detail = await getTranslations("vehicleDetail");
+  const t = await getTranslations({ locale, namespace: "vehicles" });
+  const detail = await getTranslations({ locale, namespace: "vehicleDetail" });
   const priceLabel =
     vehicle.priceLkr != null
       ? formatLkr(vehicle.priceLkr, contentLocale)
@@ -161,7 +161,7 @@ export default async function VehicleDetailPage({ params }: Props) {
           }
         >
           <div className="flex flex-wrap items-center gap-2">
-            <AvailabilityBadge availability={vehicle.availability} />
+            <AvailabilityBadge availability={vehicle.availability} locale={contentLocale} />
             {vehicle.featured ? (
               <span className="inline-block rounded-full bg-primary px-2 py-0.5 text-label font-medium text-on-primary">
                 {t("featured")}
