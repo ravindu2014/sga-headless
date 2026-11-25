@@ -1,12 +1,27 @@
 import "./globals.css";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, setRequestLocale } from "next-intl/server";
+import { getSiteSettings } from "@/content";
+import { NotFoundContent } from "@/components/layout/NotFoundContent";
+import { SiteShell } from "@/components/layout/SiteShell";
+import { routing } from "@/i18n/routing";
+import { fontVariables } from "./fonts";
 
-export default function NotFound() {
+export default async function NotFound() {
+  setRequestLocale(routing.defaultLocale);
+  const [messages, settings] = await Promise.all([
+    getMessages(),
+    getSiteSettings(routing.defaultLocale),
+  ]);
+
   return (
-    <html lang="en">
-      <body className="min-h-screen antialiased">
-        <main className="mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center px-4 py-16 text-center">
-          <h1 className="text-2xl font-bold text-primary">Page not found</h1>
-        </main>
+    <html lang={routing.defaultLocale}>
+      <body className={`${fontVariables} min-h-screen`}>
+        <NextIntlClientProvider messages={messages}>
+          <SiteShell settings={settings}>
+            <NotFoundContent />
+          </SiteShell>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

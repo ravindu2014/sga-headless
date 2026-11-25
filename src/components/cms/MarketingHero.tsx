@@ -11,9 +11,9 @@ type Props = {
 
 export function MarketingHero({ page, primaryCta, secondaryCta }: Props) {
   return (
-    <section className="mx-auto grid max-w-content gap-8 px-page-gutter-mobile py-section-y md:grid-cols-[1.1fr_0.9fr] md:items-center md:px-page-gutter-desktop">
+    <section className="mx-auto grid max-w-content gap-4 px-page-gutter-mobile py-4 md:grid-cols-[1.1fr_0.9fr] md:items-center md:px-page-gutter-desktop">
       <div>
-        <h1 className="text-display-mobile text-primary md:text-display">
+        <h1 className="text-headline text-primary">
           {page.heroHeadline.value}
           {page.heroHeadline.usedFallback ? (
             <span className="ml-2 text-label text-on-surface-muted">
@@ -24,11 +24,11 @@ export function MarketingHero({ page, primaryCta, secondaryCta }: Props) {
         {page.heroSubheadline ? (
           <LocaleText
             value={page.heroSubheadline}
-            className="mt-3 max-w-prose text-body text-on-surface-muted"
+            className="mt-2 max-w-prose text-body text-on-surface-muted"
           />
         ) : null}
         {primaryCta || secondaryCta ? (
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-4 flex flex-wrap gap-3">
             {primaryCta ? (
               <Link
                 href={primaryCta.href}
@@ -48,17 +48,17 @@ export function MarketingHero({ page, primaryCta, secondaryCta }: Props) {
           </div>
         ) : null}
       </div>
-      <div className="overflow-hidden rounded-container border border-border bg-surface">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-container border border-border bg-surface">
         {page.heroImage?.url ? (
           <Image
             src={page.heroImage.url}
             alt={page.heroImage.alt ?? page.heroHeadline.value}
-            width={1200}
-            height={900}
-            className="aspect-[4/3] h-auto w-full object-cover"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 40vw"
           />
         ) : (
-          <div className="flex aspect-[4/3] items-center justify-center text-body-sm text-on-surface-muted">
+          <div className="flex h-full items-center justify-center text-body-sm text-on-surface-muted">
             Hero image
           </div>
         )}

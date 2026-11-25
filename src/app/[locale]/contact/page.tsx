@@ -57,22 +57,22 @@ export default async function ContactPage({ params }: Props) {
         {page?.enquiryIntro ? (
           <LocaleText
             value={page.enquiryIntro}
-            className="mb-6 max-w-prose text-body text-on-surface-muted"
+            className="mb-3 max-w-prose text-body text-on-surface-muted"
           />
         ) : null}
         {settings ? (
-          <ul className="grid gap-4 sm:grid-cols-3">
+          <ul className="grid gap-catalogue-gap sm:grid-cols-3">
             <li className="rounded-container border border-border p-card-padding">
               <p className="text-label text-primary">{t("whatsapp")}</p>
               <a
                 href={whatsAppHref(settings.whatsapp)}
-                className="mt-2 block text-body font-medium text-on-surface hover:text-primary"
+                className="mt-1 inline-flex min-h-tap items-center text-body font-medium text-on-surface hover:text-primary"
                 rel="noopener noreferrer"
                 target="_blank"
               >
                 {settings.whatsapp}
               </a>
-              <p className="mt-2 text-body-sm text-on-surface-muted">
+              <p className="mt-1 text-body-sm text-on-surface-muted">
                 {t("whatsappHint")}
               </p>
             </li>
@@ -80,7 +80,7 @@ export default async function ContactPage({ params }: Props) {
               <p className="text-label text-primary">{t("phone")}</p>
               <a
                 href={`tel:${settings.phone.replace(/\s/g, "")}`}
-                className="mt-2 block text-body font-medium text-on-surface hover:text-primary"
+                className="mt-1 inline-flex min-h-tap items-center text-body font-medium text-on-surface hover:text-primary"
               >
                 {settings.phone}
               </a>
@@ -89,7 +89,7 @@ export default async function ContactPage({ params }: Props) {
               <p className="text-label text-primary">{t("email")}</p>
               <a
                 href={`mailto:${settings.email}`}
-                className="mt-2 block text-body font-medium text-on-surface hover:text-primary"
+                className="mt-1 inline-flex min-h-tap items-center text-body font-medium text-on-surface hover:text-primary"
               >
                 {settings.email}
               </a>

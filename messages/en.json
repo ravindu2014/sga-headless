@@ -105,5 +105,9 @@
   },
   "common": {
     "brandName": "Serendib Global Auto"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "That page is not on this site. Browse the vehicles we have listed."
   }
 }

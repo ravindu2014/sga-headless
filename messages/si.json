@@ -105,5 +105,9 @@
   },
   "common": {
     "brandName": "Serendib Global Auto"
+  },
+  "notFound": {
+    "title": "පිටුව හමු නොවීය",
+    "body": "එම පිටුව මෙම අඩවියේ නැත. ලැයිස්තුගත වාහන බලන්න."
   }
 }

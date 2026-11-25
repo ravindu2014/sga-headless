@@ -29,7 +29,7 @@ export function FaqAccordion({ items }: Props) {
                 id={buttonId}
                 aria-expanded={open}
                 aria-controls={panelId}
-                className="flex w-full min-h-tap items-center justify-between gap-4 px-card-padding py-3 text-left text-title text-on-surface hover:text-primary"
+                className="flex w-full min-h-tap items-center justify-between gap-3 px-card-padding py-2 text-left text-title text-on-surface hover:text-primary"
                 onClick={() => setOpenIndex(open ? null : index)}
               >
                 <span>{item.question.value}</span>
@@ -43,7 +43,7 @@ export function FaqAccordion({ items }: Props) {
                 id={panelId}
                 role="region"
                 aria-labelledby={buttonId}
-                className="border-t border-border px-card-padding pb-4 pt-2"
+                className="border-t border-border px-card-padding pb-card-padding pt-2"
               >
                 <LocaleText
                   value={item.answer}

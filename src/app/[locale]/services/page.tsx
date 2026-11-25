@@ -54,7 +54,7 @@ export default async function ServicesPage({ params }: Props) {
         </section>
       ) : null}
       <section className="border-t border-border">
-        <div className="mx-auto grid max-w-content gap-catalogue-gap px-page-gutter-mobile py-section-y md:px-page-gutter-desktop md:grid-cols-2">
+        <div className="mx-auto grid max-w-content gap-catalogue-gap px-page-gutter-mobile py-section-y md:grid-cols-3 md:px-page-gutter-desktop">
           {page.services.map((service) => (
             <article
               key={service.key}
