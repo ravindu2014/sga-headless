@@ -109,7 +109,7 @@ export default async function VehicleDetailPage({ params }: Props) {
   }
 
   return (
-    <main className="mx-auto max-w-content px-page-gutter-mobile py-4 md:px-page-gutter-desktop">
+    <main className="mx-auto max-w-content px-page-gutter-mobile py-4 md:px-page-gutter-desktop min-[1264px]:px-page-gutter-wide">
       <div className="lg:grid lg:grid-cols-[1.2fr_0.8fr] lg:items-start lg:gap-4">
         {hasPhotos || hasStory ? (
           <div className="space-y-4 lg:col-start-1">

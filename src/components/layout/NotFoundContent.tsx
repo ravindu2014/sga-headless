@@ -6,7 +6,7 @@ export async function NotFoundContent() {
   const cta = await getTranslations("cta");
 
   return (
-    <main className="mx-auto max-w-content px-page-gutter-mobile py-4 md:px-page-gutter-desktop">
+    <main className="mx-auto max-w-content px-page-gutter-mobile py-4 md:px-page-gutter-desktop min-[1264px]:px-page-gutter-wide">
       <h1 className="text-headline text-primary">{t("title")}</h1>
       <p className="mt-2 max-w-prose text-body text-on-surface-muted">{t("body")}</p>
       <Link

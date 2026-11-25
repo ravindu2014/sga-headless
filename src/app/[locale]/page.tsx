@@ -60,7 +60,7 @@ export default async function HomePage({ params }: Props) {
         </section>
       ) : null}
       <section className="border-t border-border">
-        <div className="mx-auto max-w-content px-page-gutter-mobile py-section-y md:px-page-gutter-desktop">
+        <div className="mx-auto max-w-content px-page-gutter-mobile py-section-y md:px-page-gutter-desktop min-[1264px]:px-page-gutter-wide">
           <h2 className="text-headline text-primary">{t("featuredTitle")}</h2>
           {featured.length ? (
             <div className="mt-4 grid gap-catalogue-gap bg-background sm:grid-cols-2 lg:grid-cols-4">

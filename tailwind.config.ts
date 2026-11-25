@@ -85,12 +85,13 @@ const config: Config = {
       spacing: {
         "page-gutter-mobile": "1rem",
         "page-gutter-desktop": "1.5rem",
+        "page-gutter-wide": "4.5rem",
         "section-y": "2rem",
         "card-padding": "0.75rem",
         "catalogue-gap": "1rem",
       },
       maxWidth: {
-        content: "72rem",
+        content: "120rem",
       },
       minHeight: {
         tap: "2.75rem",

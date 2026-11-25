@@ -44,7 +44,7 @@ export default async function ContactPage({ params }: Props) {
       {page ? (
         <MarketingHero page={page} />
       ) : (
-        <div className="mx-auto max-w-content px-page-gutter-mobile py-section-y md:px-page-gutter-desktop">
+        <div className="mx-auto max-w-content px-page-gutter-mobile py-section-y md:px-page-gutter-desktop min-[1264px]:px-page-gutter-wide">
           <h1 className="text-headline text-primary">{t("title")}</h1>
         </div>
       )}
@@ -53,7 +53,7 @@ export default async function ContactPage({ params }: Props) {
           <PortableTextBody value={page.body} />
         </section>
       ) : null}
-      <section className="mx-auto max-w-content px-page-gutter-mobile pb-section-y md:px-page-gutter-desktop">
+      <section className="mx-auto max-w-content px-page-gutter-mobile pb-section-y md:px-page-gutter-desktop min-[1264px]:px-page-gutter-wide">
         {page?.enquiryIntro ? (
           <LocaleText
             value={page.enquiryIntro}

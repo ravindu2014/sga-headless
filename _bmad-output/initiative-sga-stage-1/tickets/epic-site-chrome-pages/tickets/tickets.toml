@@ -1,0 +1,24 @@
+# Stories — epic-site-chrome-pages (build order)
+
+[[entry]]
+id = 1
+type = "story"
+title = "Desktop content column matches Collecting Cars"
+description = "Widen the shared content column to the Collecting Cars landing-page measure. Leave phone and tablet padding as they are."
+covers = ["R1"]
+risk = "low"
+hitl = false
+after = []
+verify = "At 1440×900 the home content inner width is 1296px. At 1920×1080 it is 1776px. At 390×844 the side padding is still 16px and the page does not overflow."
+
+[[entry.acceptance]]
+criterion = "At 1440px and at 1920px, the shared column’s inner width matches Collecting Cars: the screen width minus 72px on each side, stopping at an outer column of 1920px."
+covers = ["R1"]
+
+[[entry.acceptance]]
+criterion = "Below 1264px the side padding is unchanged: 16px on phones, 24px from the tablet breakpoint. Stacking, tap targets, and the mobile menu are unchanged."
+covers = ["R1"]
+
+[[entry.acceptance]]
+criterion = "Narrow reading columns stay narrow. Type sizes, card proportions, catalogue columns, and the vehicle detail split stay as they are."
+covers = ["R1"]

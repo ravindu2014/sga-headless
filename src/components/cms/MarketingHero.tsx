@@ -11,7 +11,7 @@ type Props = {
 
 export function MarketingHero({ page, primaryCta, secondaryCta }: Props) {
   return (
-    <section className="mx-auto grid max-w-content gap-4 px-page-gutter-mobile py-4 md:grid-cols-[1.1fr_0.9fr] md:items-center md:px-page-gutter-desktop">
+    <section className="mx-auto grid max-w-content gap-4 px-page-gutter-mobile py-4 md:grid-cols-[1.1fr_0.9fr] md:items-center md:px-page-gutter-desktop min-[1264px]:px-page-gutter-wide">
       <div>
         <h1 className="text-headline text-primary">
           {page.heroHeadline.value}

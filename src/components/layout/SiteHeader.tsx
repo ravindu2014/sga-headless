@@ -17,7 +17,7 @@ function DesktopNav() {
       className="hidden bg-primary lg:block"
       aria-label={t("primary")}
     >
-      <ul className="mx-auto flex max-w-content items-stretch gap-1 px-page-gutter-desktop">
+      <ul className="mx-auto flex max-w-content items-stretch gap-1 px-page-gutter-desktop min-[1264px]:px-page-gutter-wide">
         {NAV_ITEMS.map((item) => {
           const active = isNavActive(pathname, item.href);
           return (
@@ -47,7 +47,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 bg-surface">
-      <div className="mx-auto flex h-11 max-w-content items-center justify-between gap-4 px-page-gutter-mobile md:px-page-gutter-desktop">
+      <div className="mx-auto flex h-11 max-w-content items-center justify-between gap-4 px-page-gutter-mobile md:px-page-gutter-desktop min-[1264px]:px-page-gutter-wide">
         <Link href="/" className="shrink-0">
           <Image
             src="/brand/sga_small_logo.jpg"

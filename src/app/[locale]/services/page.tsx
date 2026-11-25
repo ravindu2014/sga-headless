@@ -36,7 +36,7 @@ export default async function ServicesPage({ params }: Props) {
 
   if (!page) {
     return (
-      <main className="mx-auto max-w-content px-page-gutter-mobile py-section-y md:px-page-gutter-desktop">
+      <main className="mx-auto max-w-content px-page-gutter-mobile py-section-y md:px-page-gutter-desktop min-[1264px]:px-page-gutter-wide">
         <h1 className="text-headline text-primary">{t("services")}</h1>
         <p className="mt-4 text-body text-on-surface-muted">
           Content coming soon.
@@ -54,7 +54,7 @@ export default async function ServicesPage({ params }: Props) {
         </section>
       ) : null}
       <section className="border-t border-border">
-        <div className="mx-auto grid max-w-content gap-catalogue-gap px-page-gutter-mobile py-section-y md:grid-cols-3 md:px-page-gutter-desktop">
+        <div className="mx-auto grid max-w-content gap-catalogue-gap px-page-gutter-mobile py-section-y md:grid-cols-3 md:px-page-gutter-desktop min-[1264px]:px-page-gutter-wide">
           {page.services.map((service) => (
             <article
               key={service.key}

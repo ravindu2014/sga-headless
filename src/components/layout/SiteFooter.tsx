@@ -21,7 +21,7 @@ export async function SiteFooter({ settings }: Props) {
 
   return (
     <footer className="mt-auto border-t border-border bg-surface">
-      <div className="mx-auto grid max-w-content gap-catalogue-gap px-page-gutter-mobile py-section-y md:grid-cols-2 md:px-page-gutter-desktop lg:grid-cols-3">
+      <div className="mx-auto grid max-w-content gap-catalogue-gap px-page-gutter-mobile py-section-y md:grid-cols-2 md:px-page-gutter-desktop min-[1264px]:px-page-gutter-wide lg:grid-cols-3">
         <div>
           <h2 className="text-title text-primary">{footer("contactHeading")}</h2>
           {settings ? (

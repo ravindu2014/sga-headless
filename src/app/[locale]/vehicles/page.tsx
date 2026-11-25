@@ -62,7 +62,7 @@ export default async function VehiclesPage({ params }: Props) {
   };
 
   return (
-    <main className="mx-auto max-w-content px-page-gutter-mobile py-section-y md:px-page-gutter-desktop">
+    <main className="mx-auto max-w-content px-page-gutter-mobile py-section-y md:px-page-gutter-desktop min-[1264px]:px-page-gutter-wide">
       <h1 className="text-headline text-primary">{t("title")}</h1>
       {vehicles.length ? (
         <VehicleCatalog
