@@ -45,11 +45,20 @@ export default async function VehiclesPage({ params }: Props) {
     sold: t("sold"),
     unavailable: t("unavailable"),
     filterMake: t("filterMake"),
-    filterFuel: t("filterFuel"),
-    filterTransmission: t("filterTransmission"),
+    filterModel: t("filterModel"),
+    filterYear: t("filterYear"),
+    filterBudget: t("filterBudget"),
     filterAll: t("filterAll"),
+    budgetUnder: t("budgetUnder"),
+    budgetMid: t("budgetMid"),
+    budgetOver: t("budgetOver"),
+    budgetPoa: t("budgetPoa"),
     filterEmpty: t("filterEmpty"),
     clearFilters: t("clearFilters"),
+    viewDetails: t("viewDetails"),
+    factYear: t("factYear"),
+    factMileage: t("factMileage"),
+    factTransmission: t("factTransmission"),
   };
 
   return (

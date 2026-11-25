@@ -54,11 +54,22 @@
     "sold": "Sold",
     "unavailable": "Unavailable",
     "filterMake": "Make",
+    "filterModel": "Model",
+    "filterYear": "Year",
+    "filterBudget": "Budget",
     "filterFuel": "Fuel",
     "filterTransmission": "Transmission",
     "filterAll": "All",
+    "budgetUnder": "Under LKR 5,000,000",
+    "budgetMid": "LKR 5,000,000 – 10,000,000",
+    "budgetOver": "Over LKR 10,000,000",
+    "budgetPoa": "Price on request",
     "filterEmpty": "No vehicles match these filters.",
-    "clearFilters": "Clear filters"
+    "clearFilters": "Reset",
+    "viewDetails": "View details",
+    "factYear": "Year",
+    "factMileage": "Mileage",
+    "factTransmission": "Transmission"
   },
   "vehicleDetail": {
     "year": "Year",

@@ -1,22 +1,23 @@
 "use client";
 
-import Image from "next/image";
 import { useMemo, useState } from "react";
-import { Link } from "@/i18n/navigation";
 import type { VehicleSummaryDto } from "@/content";
-import { formatLkr } from "@/lib/format";
 import type { Locale } from "@/i18n/routing";
+import {
+  VehicleSummaryCard,
+  type VehicleSummaryCardLabels,
+} from "./VehicleSummaryCard";
 
-export type VehicleCatalogLabels = {
-  priceOnRequest: string;
-  featured: string;
-  available: string;
-  sold: string;
-  unavailable: string;
+export type VehicleCatalogLabels = VehicleSummaryCardLabels & {
   filterMake: string;
-  filterFuel: string;
-  filterTransmission: string;
+  filterModel: string;
+  filterYear: string;
+  filterBudget: string;
   filterAll: string;
+  budgetUnder: string;
+  budgetMid: string;
+  budgetOver: string;
+  budgetPoa: string;
   filterEmpty: string;
   clearFilters: string;
 };
@@ -27,27 +28,36 @@ type Props = {
   labels: VehicleCatalogLabels;
 };
 
-function specsLine(vehicle: VehicleSummaryDto): string {
-  return [vehicle.fuelType, vehicle.transmission].filter(Boolean).join(" · ");
+type Budget = "" | "under" | "mid" | "over" | "poa";
+
+function matchesBudget(vehicle: VehicleSummaryDto, budget: Budget): boolean {
+  if (!budget) return true;
+  if (budget === "poa") return vehicle.priceLkr == null;
+  if (vehicle.priceLkr == null) return false;
+  if (budget === "under") return vehicle.priceLkr < 5_000_000;
+  if (budget === "mid") {
+    return vehicle.priceLkr >= 5_000_000 && vehicle.priceLkr <= 10_000_000;
+  }
+  return vehicle.priceLkr > 10_000_000;
 }
 
 export function VehicleCatalog({ vehicles, locale, labels }: Props) {
   const [make, setMake] = useState("");
-  const [fuel, setFuel] = useState("");
-  const [transmission, setTransmission] = useState("");
+  const [model, setModel] = useState("");
+  const [year, setYear] = useState("");
+  const [budget, setBudget] = useState<Budget>("");
 
   const makes = useMemo(
     () => [...new Set(vehicles.map((v) => v.make))].sort(),
     [vehicles],
   );
-  const fuels = useMemo(
+  const models = useMemo(() => {
+    const source = make ? vehicles.filter((v) => v.make === make) : vehicles;
+    return [...new Set(source.map((v) => v.model))].sort();
+  }, [vehicles, make]);
+  const years = useMemo(
     () =>
-      [...new Set(vehicles.map((v) => v.fuelType).filter(Boolean))].sort() as string[],
-    [vehicles],
-  );
-  const transmissions = useMemo(
-    () =>
-      [...new Set(vehicles.map((v) => v.transmission).filter(Boolean))].sort() as string[],
+      [...new Set(vehicles.map((v) => v.year))].sort((a, b) => b - a),
     [vehicles],
   );
 
@@ -55,154 +65,125 @@ export function VehicleCatalog({ vehicles, locale, labels }: Props) {
     () =>
       vehicles.filter((v) => {
         if (make && v.make !== make) return false;
-        if (fuel && v.fuelType !== fuel) return false;
-        if (transmission && v.transmission !== transmission) return false;
+        if (model && v.model !== model) return false;
+        if (year && String(v.year) !== year) return false;
+        if (!matchesBudget(v, budget)) return false;
         return true;
       }),
-    [vehicles, make, fuel, transmission],
+    [vehicles, make, model, year, budget],
   );
-
-  const showFilters =
-    makes.length > 1 || fuels.length > 0 || transmissions.length > 0;
 
   const selectClass =
     "min-h-tap rounded-md border border-border bg-surface px-3 text-body-sm text-on-surface";
 
+  function reset() {
+    setMake("");
+    setModel("");
+    setYear("");
+    setBudget("");
+  }
+
   return (
     <div>
-      {showFilters ? (
-        <div className="mt-6 flex flex-wrap gap-3" role="group" aria-label="Filters">
-          {makes.length > 1 ? (
-            <label className="flex flex-col gap-1 text-body-sm">
-              <span className="text-label text-on-surface-muted">
-                {labels.filterMake}
-              </span>
-              <select
-                className={selectClass}
-                value={make}
-                onChange={(e) => setMake(e.target.value)}
-              >
-                <option value="">{labels.filterAll}</option>
-                {makes.map((m) => (
-                  <option key={m} value={m}>
-                    {m}
-                  </option>
-                ))}
-              </select>
-            </label>
-          ) : null}
-          {fuels.length > 0 ? (
-            <label className="flex flex-col gap-1 text-body-sm">
-              <span className="text-label text-on-surface-muted">
-                {labels.filterFuel}
-              </span>
-              <select
-                className={selectClass}
-                value={fuel}
-                onChange={(e) => setFuel(e.target.value)}
-              >
-                <option value="">{labels.filterAll}</option>
-                {fuels.map((f) => (
-                  <option key={f} value={f}>
-                    {f}
-                  </option>
-                ))}
-              </select>
-            </label>
-          ) : null}
-          {transmissions.length > 0 ? (
-            <label className="flex flex-col gap-1 text-body-sm">
-              <span className="text-label text-on-surface-muted">
-                {labels.filterTransmission}
-              </span>
-              <select
-                className={selectClass}
-                value={transmission}
-                onChange={(e) => setTransmission(e.target.value)}
-              >
-                <option value="">{labels.filterAll}</option>
-                {transmissions.map((tr) => (
-                  <option key={tr} value={tr}>
-                    {tr}
-                  </option>
-                ))}
-              </select>
-            </label>
-          ) : null}
-        </div>
-      ) : null}
+      <div
+        className="mt-6 flex flex-wrap items-end gap-3"
+        role="group"
+        aria-label={labels.filterMake}
+      >
+        <label className="flex min-w-40 flex-col gap-1 text-body-sm">
+          <span className="text-label text-on-surface-muted">
+            {labels.filterMake}
+          </span>
+          <select
+            className={selectClass}
+            value={make}
+            onChange={(e) => {
+              setMake(e.target.value);
+              setModel("");
+            }}
+          >
+            <option value="">{labels.filterAll}</option>
+            {makes.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="flex min-w-40 flex-col gap-1 text-body-sm">
+          <span className="text-label text-on-surface-muted">
+            {labels.filterModel}
+          </span>
+          <select
+            className={selectClass}
+            value={model}
+            onChange={(e) => setModel(e.target.value)}
+          >
+            <option value="">{labels.filterAll}</option>
+            {models.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="flex min-w-32 flex-col gap-1 text-body-sm">
+          <span className="text-label text-on-surface-muted">
+            {labels.filterYear}
+          </span>
+          <select
+            className={selectClass}
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+          >
+            <option value="">{labels.filterAll}</option>
+            {years.map((item) => (
+              <option key={item} value={String(item)}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="flex min-w-52 flex-col gap-1 text-body-sm">
+          <span className="text-label text-on-surface-muted">
+            {labels.filterBudget}
+          </span>
+          <select
+            className={selectClass}
+            value={budget}
+            onChange={(e) => setBudget(e.target.value as Budget)}
+          >
+            <option value="">{labels.filterAll}</option>
+            <option value="under">{labels.budgetUnder}</option>
+            <option value="mid">{labels.budgetMid}</option>
+            <option value="over">{labels.budgetOver}</option>
+            <option value="poa">{labels.budgetPoa}</option>
+          </select>
+        </label>
+        <button
+          type="button"
+          className="min-h-tap rounded-md border border-border-strong px-4 text-body-sm font-semibold text-primary"
+          onClick={reset}
+        >
+          {labels.clearFilters}
+        </button>
+      </div>
 
       {filtered.length === 0 ? (
         <div className="mt-8 rounded-container border border-border p-card-padding">
           <p className="text-body text-on-surface-muted">{labels.filterEmpty}</p>
-          <button
-            type="button"
-            className="mt-3 text-body-sm font-medium text-primary hover:underline"
-            onClick={() => {
-              setMake("");
-              setFuel("");
-              setTransmission("");
-            }}
-          >
-            {labels.clearFilters}
-          </button>
         </div>
       ) : (
-        <div className="mt-8 grid gap-catalogue-gap bg-background sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((vehicle) => {
-            const priceLabel =
-              vehicle.priceLkr != null
-                ? formatLkr(vehicle.priceLkr, locale)
-                : labels.priceOnRequest;
-            const specs = specsLine(vehicle);
-            return (
-              <Link
-                key={vehicle.slug}
-                href={`/vehicles/${vehicle.slug}`}
-                className="block rounded-container border border-border bg-surface transition-colors hover:border-border-strong"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden border-b border-border bg-surface">
-                  {vehicle.mainImage?.url ? (
-                    <Image
-                      src={vehicle.mainImage.url}
-                      alt={vehicle.mainImage.alt ?? vehicle.title.value}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  ) : (
-                    <div className="flex aspect-[4/3] items-center justify-center text-body-sm text-on-surface-muted">
-                      {vehicle.title.value}
-                    </div>
-                  )}
-                </div>
-                <div className="p-card-padding">
-                  <div className="mb-2 flex flex-wrap gap-2">
-                    {vehicle.featured ? (
-                      <span className="inline-block rounded-full bg-primary px-2 py-0.5 text-label font-medium text-on-primary">
-                        {labels.featured}
-                      </span>
-                    ) : null}
-                    <span className="inline-block rounded-full bg-surface-muted px-2 py-0.5 text-label font-medium text-on-surface-muted">
-                      {labels[vehicle.availability]}
-                    </span>
-                  </div>
-                  <h2 className="text-title text-on-surface">
-                    {vehicle.title.value}
-                  </h2>
-                  <p className="mt-1 text-body-sm text-on-surface-muted">
-                    {vehicle.year} · {vehicle.make} · {vehicle.model}
-                  </p>
-                  {specs ? (
-                    <p className="mt-1 text-body-sm text-on-surface-muted">
-                      {specs}
-                    </p>
-                  ) : null}
-                  <p className="mt-2 text-price text-on-surface">{priceLabel}</p>
-                </div>
-              </Link>
-            );
-          })}
+        <div className="mt-8 grid items-stretch gap-catalogue-gap bg-background sm:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((vehicle) => (
+            <VehicleSummaryCard
+              key={vehicle.slug}
+              vehicle={vehicle}
+              locale={locale}
+              labels={labels}
+              headingLevel="h2"
+            />
+          ))}
         </div>
       )}
     </div>

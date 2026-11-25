@@ -63,6 +63,7 @@ export type VehicleSummaryDto = {
   make: string;
   model: string;
   year: number;
+  mileage?: number;
   featured: boolean;
   availability: VehicleAvailability;
   fuelType?: string;

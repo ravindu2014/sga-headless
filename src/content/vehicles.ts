@@ -92,6 +92,7 @@ function mapVehicleSummary(
     make: row.make,
     model: row.model,
     year: row.year,
+    ...(row.mileage != null ? { mileage: row.mileage } : {}),
     featured: Boolean(row.featured),
     availability: row.availability ?? "available",
     ...(row.transmission ? { transmission: row.transmission } : {}),

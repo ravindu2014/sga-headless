@@ -1,5 +1,5 @@
 ---
-status: epic-a-implemented
+status: epic-a-and-b-implemented
 date: 2026-11-25
 benchmark: https://collectingcars.com/
 constraint: no application code until an epic/story is approved
