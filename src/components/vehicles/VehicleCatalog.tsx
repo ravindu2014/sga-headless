@@ -73,8 +73,7 @@ export function VehicleCatalog({ vehicles, locale, labels }: Props) {
     [vehicles, make, model, year, budget],
   );
 
-  const selectClass =
-    "min-h-tap rounded-md border border-border bg-surface px-3 text-body-sm text-on-surface";
+  const selectClass = "field-select text-body-sm";
 
   function reset() {
     setMake("");
@@ -162,7 +161,7 @@ export function VehicleCatalog({ vehicles, locale, labels }: Props) {
         </label>
         <button
           type="button"
-          className="min-h-tap rounded-md border border-border-strong px-4 text-body-sm font-semibold text-primary"
+          className="min-h-tap rounded-md border border-border-strong px-3 text-body-sm font-semibold text-primary"
           onClick={reset}
         >
           {labels.clearFilters}

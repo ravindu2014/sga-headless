@@ -113,7 +113,7 @@ export function VehicleSummaryCard({
         <p className="mt-3 text-price text-on-surface">{priceLabel}</p>
         <Link
           href={href}
-          className="mt-4 inline-flex min-h-tap items-center justify-center rounded-md bg-accent px-6 text-body font-semibold text-on-accent hover:bg-accent-hover"
+          className="mt-4 inline-flex min-h-tap items-center justify-center rounded-md bg-accent px-3 text-body font-semibold text-on-accent hover:bg-accent-hover"
         >
           {labels.viewDetails}
         </Link>

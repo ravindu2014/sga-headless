@@ -32,7 +32,7 @@ export function MarketingHero({ page, primaryCta, secondaryCta }: Props) {
             {primaryCta ? (
               <Link
                 href={primaryCta.href}
-                className="inline-flex min-h-tap items-center justify-center rounded-md bg-accent px-6 font-semibold text-body text-on-accent hover:bg-accent-hover"
+                className="inline-flex min-h-tap items-center justify-center rounded-md bg-accent px-3 font-semibold text-body text-on-accent hover:bg-accent-hover"
               >
                 {primaryCta.label}
               </Link>
@@ -40,7 +40,7 @@ export function MarketingHero({ page, primaryCta, secondaryCta }: Props) {
             {secondaryCta ? (
               <Link
                 href={secondaryCta.href}
-                className="inline-flex min-h-tap items-center justify-center rounded-md border border-border-strong bg-surface px-6 font-semibold text-body text-primary"
+                className="inline-flex min-h-tap items-center justify-center rounded-md border border-border-strong bg-surface px-3 font-semibold text-body text-primary"
               >
                 {secondaryCta.label}
               </Link>

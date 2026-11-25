@@ -63,7 +63,7 @@ export function VehicleEnquiry({ whatsapp, vehicleTitle, pageUrl }: Props) {
           autoComplete="name"
           required
           maxLength={MAX_NAME_LENGTH}
-          className="mt-1 w-full min-h-tap rounded-md border border-border px-3 text-body"
+          className="field-control mt-1"
           value={name}
           onChange={(e) => setName(e.target.value)}
           aria-invalid={error ? true : undefined}
@@ -84,14 +84,14 @@ export function VehicleEnquiry({ whatsapp, vehicleTitle, pageUrl }: Props) {
           name="message"
           rows={3}
           maxLength={MAX_MESSAGE_LENGTH}
-          className="mt-1 w-full rounded-md border border-border px-3 py-2 text-body"
+          className="field-control mt-1 py-2"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
       </div>
       <button
         type="submit"
-        className="inline-flex min-h-tap w-full items-center justify-center rounded-md bg-accent px-6 font-semibold text-body text-on-accent hover:bg-accent-hover"
+        className="inline-flex min-h-tap w-full items-center justify-center rounded-md bg-accent px-3 font-semibold text-body text-on-accent hover:bg-accent-hover"
       >
         {t("submit")}
       </button>

@@ -25,7 +25,7 @@ export function MobileNav() {
       {open ? (
         <nav
           id="mobile-nav-panel"
-          className="absolute left-0 right-0 top-16 z-40 border-b border-primary bg-surface px-page-gutter-mobile py-3"
+          className="absolute left-0 right-0 top-11 z-40 border-b border-primary bg-surface px-page-gutter-mobile py-3"
           aria-label={t("primary")}
         >
           <ul className="flex flex-col gap-1">

@@ -160,7 +160,7 @@ export default async function VehicleDetailPage({ params }: Props) {
             />
           ) : null}
         </div>
-        <aside className="h-fit rounded-container border border-border p-card-padding lg:sticky lg:top-32">
+        <aside className="h-fit rounded-container border border-border p-card-padding lg:sticky lg:top-[5.5rem]">
           <p className="text-price text-on-surface">{priceLabel}</p>
           {settings ? (
             <VehicleEnquiry

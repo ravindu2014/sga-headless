@@ -85,9 +85,9 @@ const config: Config = {
       spacing: {
         "page-gutter-mobile": "1rem",
         "page-gutter-desktop": "1.5rem",
-        "section-y": "3rem",
-        "card-padding": "1rem",
-        "catalogue-gap": "1.5rem",
+        "section-y": "2rem",
+        "card-padding": "0.75rem",
+        "catalogue-gap": "1rem",
       },
       maxWidth: {
         content: "72rem",

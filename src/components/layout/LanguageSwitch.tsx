@@ -24,7 +24,7 @@ export function LanguageSwitch() {
             key={loc}
             href={pathname}
             locale={loc}
-            className={`min-h-[2.25rem] min-w-[2.75rem] rounded-full px-3 py-1.5 text-center font-medium transition-colors ${
+            className={`flex h-8 min-w-[2.75rem] items-center justify-center rounded-full px-3 text-center font-medium transition-colors ${
               active
                 ? "bg-surface text-primary"
                 : "text-on-surface hover:text-primary"

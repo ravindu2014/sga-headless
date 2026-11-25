@@ -27,8 +27,8 @@ function DesktopNav() {
                 aria-current={active ? "page" : undefined}
                 className={
                   active
-                    ? "flex min-h-tap items-center gap-2 border-b-2 border-on-primary bg-white/15 px-3 text-body-sm font-semibold text-on-primary"
-                    : "flex min-h-tap items-center gap-2 border-b-2 border-transparent px-3 text-body-sm font-medium text-on-primary/90 hover:bg-white/10 hover:text-on-primary"
+                    ? "flex h-11 items-center gap-2 border-b-2 border-on-primary bg-white/15 px-3 text-body-sm font-semibold text-on-primary"
+                    : "flex h-11 items-center gap-2 border-b-2 border-transparent px-3 text-body-sm font-medium text-on-primary/90 hover:bg-white/10 hover:text-on-primary"
                 }
               >
                 <NavIcon name={item.key} />
@@ -46,15 +46,15 @@ export function SiteHeader() {
   const t = useTranslations("common");
 
   return (
-    <header className="sticky top-0 z-50 border-b border-primary bg-surface">
-      <div className="mx-auto flex h-16 max-w-content items-center justify-between gap-4 px-page-gutter-mobile md:px-page-gutter-desktop">
+    <header className="sticky top-0 z-50 bg-surface">
+      <div className="mx-auto flex h-11 max-w-content items-center justify-between gap-4 px-page-gutter-mobile md:px-page-gutter-desktop">
         <Link href="/" className="shrink-0">
           <Image
             src="/brand/sga_small_logo.jpg"
             alt={t("brandName")}
-            width={160}
-            height={40}
-            className="h-10 w-auto"
+            width={128}
+            height={32}
+            className="h-8 w-auto"
             priority
           />
         </Link>
